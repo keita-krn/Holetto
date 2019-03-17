@@ -1,0 +1,231 @@
+/*全体に関するCSS*/
+*{
+    -moz-box-sizing: border-box;
+    box-sizing:border-box;
+}
+body{
+    margin:0;
+    padding:0;
+    padding:0;
+    font-family:Verdana,Helvetica,sans-serif;
+}
+a {
+  text-decoration: none;
+}
+/*ヘッダー部分*/
+.header{
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:50px;
+    background-color:#fff;
+    z-index:10;
+    border-bottom:1px solid lightgray;
+    line-height:50px;
+}
+.header img{
+    max-width:150px;
+    height:auto;
+}
+.logo{
+    position:absolute;
+    top: 0;
+    left: 10px;
+}
+
+.top-logo,.searchbox,.menu{
+    display:inline-block;
+    vertical-align: top;
+    width: 33%;
+}
+.menu{
+    position:relative;
+}
+.menu_box{
+    position:absolute;
+    right:10px;
+    height:50px;
+    display: flex;
+	align-items: center;
+}
+.user_image{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    margin-right:3px;
+}
+.user_name{
+    color:#000;
+    font-size:12px;
+    margin-right:5px;
+}
+.btn{
+    display:inline-block;
+    vertical-align:middle;
+    color:black;
+    border:1px solid black;
+    text-align:center;
+    border-radius:5px;
+    background-color:white;
+    width:100px;
+    transition:.3s;
+    height:30px;
+    font-size:12px;
+    line-height:30px;
+    margin-right:5px;
+}
+.btn:hover {
+    background: #045FB4;
+    color: #fff;
+}
+.search_container{
+    border:1px solid #999;
+    height:38px;
+    margin-top:6px;
+    padding:0 10px;
+    line-height:38px;
+    border-radius:12px;
+    position:relative;
+}
+.search_container input[type=text]{
+    display:inline-block;
+    width:300px;
+    height:20px;
+    font-size:15px;
+    border:none;
+    margin-right:80px;
+    background-color:#fff;
+    position:absolute;
+    top:9px;
+    left:7px;
+}
+.search_container input[type=text]:focus{
+    outline: 0;
+    background-color:#fff;
+}
+.search_container input[type="submit"]{
+    cursor: pointer;
+    font-family: FontAwesome;
+    border: none;
+    background: none;
+    color: #3879D9;
+    font-size:22px;
+    position:absolute;
+    top:5px;
+    right:3px;
+  }
+.searchtext::-webkit-input-placeholder {
+	color:#A4A4A4;
+}
+.searchtext::-moz-placeholder {
+	color: #A4A4A4;
+}
+.search:-ms-input-placeholder {
+	color: #A4A4A4;
+}
+/*ウェルカム部分*/
+.welcome{
+    text-align:center;
+    margin-top:30px;
+    background-image: url(../image/bg-image/andy-holmes-706446-unsplash.jpg);
+    background-size: cover;
+    width:100%;
+    height:260px;
+    color:white;
+}
+.welcome p{
+    font-size:15px;
+}
+.welcome_btn_box{
+    display:inline-block;
+}
+.welcome_btn{
+    padding:5px 8px;
+    display:inline-block;
+    text-align:center;
+    border-radius: 5px;
+    transition: .3s;
+    background-color:#fff;
+    color:#000;
+    width:160px;
+}
+.welcome_btn:hover{
+    background-color:#045FB4;
+    color:#fff;
+}
+.categoryCreate{
+    background-color:#fff;
+    color:#000;
+    width:220px;
+}
+.categoryCreate:hover{
+    background-color:#045FB4;
+    color:#fff;
+}
+/*フォーム部分*/
+.main{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+}
+.category{
+    display:inline-block;
+    width:180px;
+    height:180px;
+    border-radius:5px;
+    overflow: hidden;
+    position: relative;
+}
+.category img{
+    width:180px;
+    height:180px;
+    filter:brightness(75%);
+}
+.category p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+    color:white;
+    font-size:20px;
+}
+.loginpage{
+    display:none;
+    z-index:100;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    text-align:center;
+    font-size:13px;
+    border-top: 1px solid #d3d3d3;
+    line-height:50px;
+    background-color:rgba(255,255,255,0.9);
+    z-index: 10;
+  }
+  @media screen and (max-width: 1024px) and (orientation: portrait){
+    .searchbox{
+        display:none;
+    }
+  }
+  /*スマホ用レイアウト*/
+  @media screen and (max-width: 480px) {
+.searchbox,.menu{
+    display:none;
+}
+  }

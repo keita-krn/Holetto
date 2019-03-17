@@ -1,0 +1,370 @@
+body{
+    margin:0;
+    padding:0;
+    font-family:Verdana,Helvetica,sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing:border-box;
+    text-align:center;
+    background-size:cover;
+    background-attachment:fixed; 
+}
+a {
+    text-decoration: none;
+  }
+.category_body,.search_body{
+    background-image:url(../image/bg-image/aperture-vintage-697015-unsplash.jpg); 
+}
+.mypage_body{
+    background-image:url(../image/bg-image/rhand-mccoy-621729-unsplash.jpg); 
+}
+.thread_body{
+    background-image:url(../image/bg-image/nathan-anderson-178671-unsplash.jpg);
+}
+.introduce{
+    display:inline-block;
+    vertical-align: top;
+    background-color:rgba(255, 255, 255, 0.9);
+    width:330px;
+    margin-top:60px;
+    border-radius:8px;
+    text-align:left;
+}
+.threads,.createthread,.contents{
+    display:inline-block;
+    vertical-align: top;
+    background-color:rgba(255,255,255,0.9);
+    width:678px;
+    margin-top:60px;
+    padding:10px;
+    border-radius:8px;
+    text-align:left;
+    margin-bottom:10px;
+}
+.categoryimage{
+    margin:10px;
+    text-align:center;
+}
+.categoryimage img{
+    width:300px;
+    height:300px;
+    border-radius:8px;
+}
+.categoryinfo{
+    display:inline-block;
+    vertical-align: top;
+    width:500px;
+    margin:10px;
+    padding:0;
+}
+.category_info_table{
+    width:300px;
+}
+.title{
+    font-size:10px;
+    color:gray;
+}
+.categoryname{
+    font-size:20px;
+}
+.categorysentence{
+    font-size:11px;
+}
+.categorysentence img{
+    width:25px;
+    height:25px;
+}
+.newThread,.threadcreatecomplete{
+    color:rgb(12, 144, 221);
+    font-size:15px;
+}
+.btn:hover {
+    opacity: 1;
+}
+/*スレッド作成部分*/
+.makenewthread{
+    font-size:20px;
+    display:inline-block;
+    margin-bottom:10px;
+}
+.error{
+    font-size:10px;
+    color:red;
+}
+.thread-header{
+    text-align:center;
+    font-size:15px;
+    font-weight:;
+}
+.createthreadconfirm{
+    background-color:white;
+    width:678px;
+    height:200px;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:10px;
+    border-radius:8px;
+}
+.thread{
+    border-bottom:1px solid black;
+    width:100%;
+}
+.threadimage{
+    display:inline-block;
+    vertical-align: top;
+    width:60px;
+    height:60px;
+    border-radius:8px;
+    margin:10px;
+}
+.threadinfo{
+    display:inline-block;
+    vertical-align: top;
+    width:400px;
+    margin:10px;
+    padding:0;
+}
+.threadimage img{
+    width:60px;
+    height:60px;
+    border-radius:8px;
+}
+.userimage{
+    max-width:40px;
+    height:auto;
+    border-radius: 50%;
+}
+.threadinfo a{
+    font-size:18px;
+    color:#848484;
+}
+.threaddate{
+    font-size:10px;
+    color:gray;
+}
+.threaduser{
+    font-size:10px;
+}
+.pagemenu{
+    text-align:center;
+    padding-top:5px;
+}
+.pagemenu a{
+    color:steelblue;
+}
+/*-----------------------------------------
+　search.php
+-----------------------------------------*/
+.keyword_box{
+    margin-top:60px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:10px;
+    width: 50%;
+    height:100px;
+    padding:20px 100px;
+    background-color:rgba(255,255,255,0.9);
+    line-height:40px;
+    border-radius:8px;
+}
+.categoriesByKeywords,.threadsByKeywords{
+    display:inline-block;
+    vertical-align:top;
+    width:40%;
+    background-color:rgba(255,255,255,0.9);
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:10px;
+}
+.categoryByKeywords,.threadByKeywords{
+    text-align:left;
+    border-bottom:1px solid black;
+    width:100%;
+}
+.categoryimageByKeywords{
+    display:inline-block;
+    vertical-align: top;
+    width:100px;
+    height:100px;
+    border-radius:8px;
+    margin:10px;
+}
+.threadimageByKeywords{
+  display:inline-block;
+  vertical-align: top;
+  width:60px;
+  height:60px;
+  border-radius:8px;
+  margin:10px;
+}
+.categoryimageByKeywords img{
+  width:100px;
+  height:100px;
+  border-radius:8px;
+}
+.threadimageByKeywords img{
+  width:60px;
+  height:60px;
+  border-radius:8px;
+}
+.categoryinfoByKeywords,.threadinfoByKeywords{
+    display:inline-block;
+    vertical-align: top;
+    width:400px;
+    margin:10px;
+    padding:0;
+}
+.categoryinfoByKeywords a{
+    font-size:18px;
+    color:#848484;
+}
+.threadinfoByKeywords a{
+  font-size:18px;
+  color:#848484;
+}
+/*-----------------------------------------
+　mypage.php
+-----------------------------------------*/
+.comment_box{
+    border-bottom:1px solid #000;
+    padding:3px 0;
+}
+.user_comment{
+    font-size:12px;
+    color:gray;
+}
+.deleteAccount{
+    color:rgb(138, 7, 7);
+    font-size:9px;
+}
+/*-----------------------------------------
+　footer.php
+-----------------------------------------*/
+.footer{
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    text-align:center;
+    font-size:13px;
+    border-top: 1px solid #d3d3d3;
+    line-height:50px;
+    background-color:#fff;
+}
+/*-----------------------------------------
+　thread.php
+-----------------------------------------*/
+.thread_box{
+    margin-top:60px;
+    display:inline-block;
+    vertical-align:top;
+    width:730px;
+    background-color:rgba(255,255,255,0.9);
+    border-radius:10px;
+    padding:5px 15px;
+    margin-bottom:80px;
+    text-align:left;
+}
+.side_box{
+    margin-top:60px;
+    width:340px;
+    display:inline-block;
+    vertical-align:top;
+    text-align:left;
+    margin-bottom:80px;
+}
+.categoryinfointhread{
+    background-color:rgba(255,255,255,0.9);
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:10px;
+}
+.commentform{
+    background-color:rgba(255,255,255,0.9);
+    border-radius:10px;
+    padding:10px;
+}
+.reply_user_name{
+    color:rgb(26, 87, 179);
+}
+.threadtop{
+    border-bottom:1px solid black;
+    padding-bottom:10px;
+    margin-bottom:10px;
+}
+.threadImage{
+   max-width:400px;
+   height:auto;
+}
+.reply_threadImage{
+    max-width:200px;
+    height:auto;
+}
+.threadCreater{
+    color:steelblue;
+}
+.threadInfo{
+    color:gray;
+    font-size:13px;
+    border-bottom:1px solid black;
+    padding-bottom:5px;
+}
+.createUserImage{
+    max-width:40px;
+    height:auto;
+    border-radius: 50%;
+}
+.userimage{
+    max-width:40px;
+    height:auto;
+    border-radius: 50%;
+}
+.comment{
+    position:relative;
+    margin-top:10px;
+}
+.reply_comment_box{
+    border:1px solid black;
+    border-radius:10px;
+    padding:5px;
+    width:600px;
+    position:relative;
+    left:20px;
+}
+.fa-quote-left,.fa-quote-right{
+    color:rgba(117, 116, 116);
+}
+.quote{
+    position:absolute;
+    bottom:3px;
+    right:3px;
+}
+/*いいねボタン部分*/
+.good-btn{
+    position:absolute;
+    bottom:0;
+    right:0;
+    cursor: pointer;
+}
+.good-btn:hover{
+    color: #f44336;
+}
+.active{
+    color: #f44336;
+}
+.good-btn .active{
+    color: #f44336;
+}
+.delete{
+    color:#f44336;
+    font-size:12px;
+}
+.fa-reply-all{
+    color:#000;
+}
+.reply{
+    font-size:12px;
+    color:#060657f8;
+}
