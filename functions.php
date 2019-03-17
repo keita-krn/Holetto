@@ -131,7 +131,7 @@ function dbConnect(){
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
 
-    $pdo = new PDO(
+    $db = new PDO(
     'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass);
     //$db = new PDO($db_name, $db_user, $db_pass);
     //例外をスローする
