@@ -125,8 +125,15 @@ function uploadImage($image,$key){
 DB接続用
  ------------------------*/
 function dbConnect(){
-    require("dbconnect.php");
-    $db = new PDO($db_name, $db_user, $db_pass);
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $server = $url["host"];
+    $user = $url["user"];
+    $pass = $url["pass"];
+    $dbname = substr($url["path"], 1);
+
+    $pdo = new PDO(
+    'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass);
+    //$db = new PDO($db_name, $db_user, $db_pass);
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
