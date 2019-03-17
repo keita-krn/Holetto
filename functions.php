@@ -125,7 +125,7 @@ function uploadImage($image,$key){
 DB接続用
  ------------------------*/
 function dbConnect(){
-    require_once("dbconnect.php");
+    require("dbconnect.php");
     $db = new PDO($db_name, $db_user, $db_pass);
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
