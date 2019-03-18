@@ -125,15 +125,18 @@ function uploadImage($image,$key){
 DB接続用
  ------------------------*/
 function dbConnect(){
-    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-    $server = $url["host"];
-    $user = $url["user"];
-    $pass = $url["pass"];
-    $dbname = substr($url["path"], 1);
+    //$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    //$server = $url["host"];
+    //$user = $url["user"];
+    //$pass = $url["pass"];
+    //$dbname = substr($url["path"], 1);
 
-    $db = new PDO(
-    'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass);
-    //$db = new PDO($db_name, $db_user, $db_pass);
+    //$db = new PDO(
+    //'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass);
+    $db_name = "mysql:dbname=heroku_88a6666fafc2c63;host=us-cdbr-iron-east-03.cleardb.net;";
+    $db_user = "b9793777d2c56b";
+    $db_pass = "890ac4ff";
+    $db = new PDO($db_name, $db_user, $db_pass);
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
@@ -178,9 +181,13 @@ function dbConnect(){
 index.phpで使用する関数
  ------------------------*/
 function getCategories(){
-    $db = dbConnect();
-    $sql = 'SELECT id,category_name,category_image FROM category_table ORDER BY insert_date DESC LIMIT 24';
-    return $db->query($sql);
+    try{
+        $db = dbConnect();
+        $sql = 'SELECT id,category_name,category_image FROM category_table ORDER BY insert_date DESC LIMIT 24';
+        return $db->query($sql);
+    }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+    }   
 }
 /*-----------------------
 login.phpで使用する関数

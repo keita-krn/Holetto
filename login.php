@@ -5,7 +5,7 @@ session_start();
 if(!empty($_POST)){
     //入力チェックを行う
     $error['email'] = checkInput('メールアドレス',$_POST['email'],1,50);
-    $error['password'] = checkInput('パスワード',$_POST['password'],1,30);   
+    $error['password'] = checkInput('パスワード',$_POST['password'],5,30);   
     
         //入力された値を元にuser_tableから情報を取得する
         $result = getUserInfoByEmail($_POST['email']);

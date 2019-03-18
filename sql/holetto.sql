@@ -21,6 +21,7 @@ insert_date datetime not null comment "投稿日時"
 
 create table comment_table(
 id int primary key not null auto_increment comment "コメントID",
+comment varchar(255) not null comment "コメント内容",
 thread_id int(20) not null comment "書き込んだスレッドのID",
 user_id int(20) not null comment "書き込んだユーザーのID",
 comment_image varchar(255) not null comment "コメント画像",

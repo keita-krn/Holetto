@@ -87,8 +87,7 @@ $error['rewrite'] = true;
                     </div>
                 </div>
                     <div class="sendbtn"><input type="submit" class="submit" value="入力内容を確認する"/></div>
-                    <div class="link">ホームへ戻りたい場合は<a href="../index.php">こちら</a></div>
-                    <div class="link">既に登録済みの方は<a href="../login.php">こちら</a></div>
+                    <div class="link">ホームへ戻りたい場合は<a href="../index.php">こちら</a> / 既に登録済みの方は<a href="../login.php">こちら</a></div>
             </form>
         </div>
     </div>

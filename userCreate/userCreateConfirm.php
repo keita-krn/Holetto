@@ -61,7 +61,7 @@ if(!isset($_SESSION['userCreate'])){
                     <div class="link">書き直したい場合は<a href="index.php?action=rewrite">こちら</a></div>
                 </div>
             </form>
+        </div>
     </div>
-</div>
 <!--フッター部分-->
 <?php require_once('../footer.php'); ?>
