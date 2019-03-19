@@ -56,7 +56,7 @@ if(empty($categories) && empty($threads)){
             <?php foreach($categories as $category): ?>
                 <div class="categoryByKeywords">
                     <div class="categoryimageByKeywords">
-                        <img src="<?=h($category['category_image'])?>">
+                        <img src="<?$category['category_image']?>">
                     </div>
                     <div class="categoryinfoByKeywords">
                         <a href="category.php?id=<?=$category['id']?>&page=1">
@@ -75,7 +75,7 @@ if(empty($categories) && empty($threads)){
             <?php foreach($threads as $thread): ?>
                 <div class="threadByKeywords">
                     <div class="threadimageByKeywords">
-                        <img src="<?=h($thread['thread_image'])?>">
+                        <img src="<?$thread['thread_image']?>">
                     </div>
                     <div class="threadinfoByKeywords">
                         <a href="thread.php?id=<?=$thread['id']?>">

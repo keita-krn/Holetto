@@ -36,7 +36,7 @@ $categories = getCategories();
         <?php foreach($categories as $category): ?>
             <a href="category.php?id=<?=$category['id']?>&page=1">
                 <div class="category">
-                    <img src="<?=h($category['category_image'])?>">
+                    <img src="<?=$category['category_image']?>">
                     <p>
                         <?=cut(h($category['category_name']),12)?>
                     </p>

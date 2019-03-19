@@ -47,10 +47,10 @@ $error['rewrite'] = true;
     <?php require_once('../header.php') ?>
     <div class="contains">
         <div class="image">
-            <img src="../image/bg-image/tim-zankert-483708-unsplash.jpg">
+            <img src="../image/tim-zankert-483708-unsplash.jpg">
         </div>
         <div class="container">
-            <img src="../image/bg-image/logo.png">
+            <img src="../image/logo.png">
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="text">
                     <label>カテゴリー名</label>

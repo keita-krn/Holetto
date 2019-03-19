@@ -13,13 +13,13 @@ a {
     text-decoration: none;
   }
 .category_body,.search_body{
-    background-image:url(../image/bg-image/aperture-vintage-697015-unsplash.jpg); 
+    background-image:url(../image/aperture-vintage-697015-unsplash.jpg); 
 }
 .mypage_body{
-    background-image:url(../image/bg-image/rhand-mccoy-621729-unsplash.jpg); 
+    background-image:url(../image/rhand-mccoy-621729-unsplash.jpg); 
 }
 .thread_body{
-    background-image:url(../image/bg-image/nathan-anderson-178671-unsplash.jpg);
+    background-image:url(../image/nathan-anderson-178671-unsplash.jpg);
 }
 .introduce{
     display:inline-block;

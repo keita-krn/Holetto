@@ -36,10 +36,10 @@ if(!empty($_POST)){
     <?php require_once('header.php') ?>
     <div class="contains">
     <div class="image">
-        <img src="image/bg-image/meric-dagli-504235-unsplash.jpg">
+        <img src="image/meric-dagli-504235-unsplash.jpg">
     </div>
 <div class="container">
-<img src="image/bg-image/logo.png">
+<img src="image/logo.png">
 <form action="" method="post">
     <div class="text">
         <label>メールアドレス</label>

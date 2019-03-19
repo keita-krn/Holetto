@@ -28,10 +28,10 @@ if(!isset($_SESSION['userCreate'])){
     <?php require_once('../header.php') ?>
     <div class="contains">
         <div class="image">
-            <img src="../image/bg-image/nitish-meena-55274-unsplash.jpg">
+            <img src="../image/nitish-meena-55274-unsplash.jpg">
         </div>
         <div class="container">
-            <img src="../image/bg-image/logo.png">
+            <img src="../image/logo.png">
             <form action="" method="post">
                 <input type="hidden" name="action" value="submit"/>
                 <p>記入した内容を確認して、「登録する」ボタンをクリックしてください。</p>
@@ -52,7 +52,7 @@ if(!isset($_SESSION['userCreate'])){
                         <td>プロフィール画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="<?=h($_SESSION['userCreate']['image'])?>" 
+                    <img src="<?=$_SESSION['userCreate']['image']?>" 
                     width="100" height="100" alt="" class="confirmimage"/></td><td></td>
                     </tr>
                 </table>

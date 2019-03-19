@@ -36,10 +36,10 @@ if(empty($_SESSION['categoryCreate'])){
     <?php require_once('../header.php') ?>
     <div class="contains">
         <div class="image">
-            <img src="../image/bg-image/jean-wimmerlin-528433-unsplash.jpg">
+            <img src="../image/jean-wimmerlin-528433-unsplash.jpg">
         </div>
         <div class="container">
-            <img src="../image/bg-image/logo.png">
+            <img src="../image/logo.png">
             <form action="" method="post">
                 <input type="hidden" name="action" value="submit"/>
                 <p>記入した内容を確認して、「登録する」ボタンをクリックしてください。</p>
@@ -56,7 +56,7 @@ if(empty($_SESSION['categoryCreate'])){
                         <td>サムネイル画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="<?=h($_SESSION['categoryCreate']['categoryimage'])?>" 
+                    <img src="<?=$_SESSION['categoryCreate']['categoryimage']?>" 
                     width="100" height="100" alt=""/></td><td></td>
                     </tr>
                 </table>

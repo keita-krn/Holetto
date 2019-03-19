@@ -65,7 +65,7 @@ if(!empty($_POST)){
                 </td>
                 <?php else: ?>
                 <td>
-                    <img src="<?=h($info['user_image'])?>" class="createUserImage">
+                    <img src="<?=($info['user_image'])?>" class="createUserImage">
                 </td>
                 <td>
                     <span class="threadCreater"><?=h($info['thread_creater'])?></span>
@@ -79,7 +79,7 @@ if(!empty($_POST)){
         <h2><?=h($info['title'])?></h2>
         <p><?=nl2br(h($info['first_comment']))?></p>
         <?php if($info['thread_image'] != "noimage.png"): ?>
-            <img src="<?=h($info['thread_image'])?>" class="threadImage">
+            <img src="<?=$info['thread_image']?>" class="threadImage">
         <?php endif; ?>
         </div>
         <div class="comments">
@@ -93,7 +93,7 @@ if(!empty($_POST)){
                             <?php if(empty($comment['user_name'])): ?>
                                 <td><span class="threadCreater">退会済みユーザー</span></td>
                             <?php else: ?>
-                                <td><img src="<?=h($comment['user_image'])?>" class="createUserImage"></td>
+                                <td><img src="<?=$comment['user_image']?>" class="createUserImage"></td>
                                 <td><span class="threadCreater"><?=h($comment['user_name'])?></span></td>
                             <?php endif; ?>
                             <td>：<?=$comment['insert_date'] ?></td>
@@ -116,7 +116,7 @@ if(!empty($_POST)){
                     <p><?=nl2br(h($comment['comment']))?></p>
                     <!--画像がアップされている場合は表示する-->
                     <?php if($comment['comment_image'] != 'noimage'): ?>
-                        <img src="<?=h($comment['comment_image'])?>" class="threadImage">
+                        <img src="<?=($comment['comment_image'])?>" class="threadImage">
                     <?php endif; ?>
 
                     <!--------返信コメントの場合は返信先のコメントの内容を表示する-------->
@@ -128,7 +128,7 @@ if(!empty($_POST)){
                             <i class="fas fa-quote-left"></i>
                                 <table>
                                     <tr>
-                                        <td><img src="<?=h($reply_comment['user_image'])?>" class="createUserImage"></td>
+                                        <td><img src="<?=$reply_comment['user_image']?>" class="createUserImage"></td>
                                         <td><span class="threadCreater"><?=h($reply_comment['user_name'])?></span></td>
                                         <td>：<?=$reply_comment['insert_date'] ?></td>
                                     </tr>
@@ -136,9 +136,10 @@ if(!empty($_POST)){
                                 <p><?=nl2br(h($reply_comment['comment']))?></p>
                                 <!--画像がアップされている場合は表示する-->
                                 <?php if($reply_comment['comment_image'] != 'noimage'): ?>
-                                    <img src="<?=h($reply_comment['comment_image'])?>" class="reply_threadImage">
+                                    <img src="<?=$reply_comment['comment_image']?>" class="reply_threadImage">
                                 <?php endif; ?>
                                 <div class="quote"><i class="fas fa-quote-right"></i></div>
+                            <!--コメントが削除されている場合-->
                             <?php else:?>
                                 ※このコメントは削除されました※
                             <?php endif; ?>
@@ -167,7 +168,7 @@ if(!empty($_POST)){
             <div class="categoryimage">
             <Span>このスレッドが所属しているカテゴリー</span>
                 <a href="category.php?id=<?=$info['category_id']?>&page=1">
-                    <img src="<?=h($info['category_image'])?>">
+                    <img src="<?=$info['category_image']?>">
                 </a>
             </div>
             <div class="categoryinfo">

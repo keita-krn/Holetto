@@ -20,7 +20,7 @@ if(!file_exists('image/bg-image/logo.png')){
 <div class="header">
     <div class="top-logo">
         <a href="<?=$f?>index.php" id="toppage">
-                <img src="<?=$f?>image/bg-image/logo.png" class="logo">
+                <img src="<?=$f?>image/logo.png" class="logo">
         </a>
     </div>
     <div class="searchbox">
@@ -36,7 +36,7 @@ if(!file_exists('image/bg-image/logo.png')){
             <!--ログイン時に表示する内容-->
             <?php if(!empty($_SESSION['userName'])): ?>
                 <div class="menu_box">                                    
-                    <img src="<?=h($_SESSION['userImage'])?>" 
+                    <img src="<?=$_SESSION['userImage']?>" 
                         alt="" class="user_image"/>                                                       
                     <a href="<?=$f?>mypage.php?id=<?=$_SESSION['userId']?>" class="user_name">
                         <?=h($_SESSION['userName'])?>

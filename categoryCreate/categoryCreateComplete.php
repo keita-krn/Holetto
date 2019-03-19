@@ -14,10 +14,10 @@ require_once('../header.php');
     <?php require_once('../header.php') ?>
     <div class="contains">
         <div class="image">
-            <img src="../image/bg-image/jean-wimmerlin-528433-unsplash.jpg">
+            <img src="../image/jean-wimmerlin-528433-unsplash.jpg">
         </div>
         <div class="container">
-            <img src="../image/bg-image/logo.png">
+            <img src="../image/logo.png">
             <p>登録が完了しました！5秒後にホーム画面に戻ります。</p>
             <div class="link">戻らない場合は<a href="../index.php">こちら</a></div>
         </div>

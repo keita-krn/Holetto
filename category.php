@@ -41,7 +41,7 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
     <?php require('header.php') ?>
     <div class="introduce">
         <div class="categoryimage">
-            <img src="<?=h($info['category_image'])?>">
+            <img src="<?=$info['category_image']?>">
         </div>
         <div class="categoryinfo">
             <table class="category_info_table">
@@ -89,7 +89,7 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
                 </td>
                 <?php else: ?>
                 <td>
-                    <img src="<?=h($info['user_image'])?>" class="userimage">   
+                    <img src="<?=$info['user_image']?>" class="userimage">   
                 </td>
                 <td>
                     <span class="categorysentence"><?=h($info['user_name'])?></span>
@@ -122,7 +122,7 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
         <?php foreach($threads as $thread): ?>
         <div class="thread">
             <div class="threadimage">
-                    <img src="<?=h($thread['thread_image'])?>">    
+                    <img src="<?=$thread['thread_image']?>">    
             </div>
             <div class="threadinfo">
                 <a href="thread.php?id=<?=$thread['thread_id'] ?>"><?=h($thread['title'])?></a><br>

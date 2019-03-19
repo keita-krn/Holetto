@@ -19,7 +19,7 @@ if(empty($_SESSION['userId'])){ //カテゴリー情報と制作者の情報を�
     <?php require_once('../header.php') ?>   
     <div class="introduce">
     <div class="categoryimage">
-            <img src="../image/category_image/<?=h($_SESSION['categoryinfo']['category_image'])?>">
+            <img src="<?=h($_SESSION['categoryinfo']['category_image'])?>">
         </div>
         <div class="categoryinfo">
             <table class="category_info_table">
@@ -65,7 +65,7 @@ if(empty($_SESSION['userId'])){ //カテゴリー情報と制作者の情報を�
                     <span class="categorysentence"><?=h($_SESSION['categoryinfo']['user_name'])?></span>
                 </td>
                 <td>
-                    <img src="../image/user_image/<?=h($_SESSION['categoryinfo']['user_image'])?>" class="userimage">
+                    <img src="<?=$_SESSION['categoryinfo']['user_image']?>" class="userimage">
                 </td>
             </tr>
             </table>
