@@ -24,7 +24,12 @@ if(!empty($_POST)){
     $check = array_filter($error);
     if(empty($check)){
         $_SESSION['categoryCreate'] = $_POST;
-        $_SESSION['categoryCreate']['categoryimage'] = uploadImageToCloudinary($_FILES['categoryimage'],'category');
+            //画像が投稿されなかった場合は用意された４つのサムネイルからランダムで１つ選ばれる
+            if($_FILES['categoryimage']['name'] === ''){
+                $_SESSION['categoryCreate']['categoryimage'] = "image/category_".rand(1,4).".jpg";
+        }else{
+            $_SESSION['categoryCreate']['categoryimage'] = uploadImageToCloudinary($_FILES['categoryimage'],'category');
+        }
         header('Location: categoryCreateConfirm.php');
         exit();
     }
