@@ -24,7 +24,7 @@ if(!empty($_POST)){
     $check = array_filter($error);
     if(empty($check)){
         $_SESSION['categoryCreate'] = $_POST;
-        $_SESSION['categoryCreate']['categoryimage'] = uploadImage($_FILES['categoryimage'],'category');
+        $_SESSION['categoryCreate']['categoryimage'] = uploadImageToCloudinary($_FILES['categoryimage'],'category');
         header('Location: categoryCreateConfirm.php');
         exit();
     }

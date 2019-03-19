@@ -56,7 +56,7 @@ if(empty($_SESSION['categoryCreate'])){
                         <td>サムネイル画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="../image/category_image/<?=h($_SESSION['categoryCreate']['categoryimage'])?>" 
+                    <img src="<?=h($_SESSION['categoryCreate']['categoryimage'])?>" 
                     width="100" height="100" alt=""/></td><td></td>
                     </tr>
                 </table>

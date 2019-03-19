@@ -38,10 +38,33 @@ function checkImage($image){
     return $errorMessage;
 }
 
-/*画像をアップロードする処理を行う。戻り値はファイル名。
+//Cloudinaryに画像をアップロードし、その画像ファイルのURLを返す。
+function uploadImageToCloudinary($image, $key){
+    require("./vendor/autoload.php");
+
+    $account = parse_url(getenv('CLOUDINARY_URL'));
+    \Cloudinary::config(array(
+        "cloud_name" => $account['host'],
+        "api_key" => $account['user'],
+        "api_secret" => $account['pass']
+    )); 
+    switch($key){
+        case "thread":
+        case "comment":
+            $result = \Cloudinary\Uploader::upload($image['tmp_name']);
+        break;
+        default:
+            $result = \Cloudinary\Uploader::upload($image['tmp_name'],array("width" => 300, "height" => 300, "crop" => "fill"));
+        break;
+    }
+    return $result["secure_url"];    
+}
+
+/*
+　画像をアップロードする処理を行う。戻り値はファイル名。
 　カテゴリー作成時、アカウント登録時にアップされた画像にはリザイズ処理を行う（300*300に縮小）。
 　画像がアップされていない場合にはNo Image画像のファイル名を格納する。
-　$keyには「category」「thread」「comment」「user」が入り、画像はそれぞれの名前がついたフォルダに保存される。*/
+　$keyには「category」「thread」「comment」「user」が入り、画像はそれぞれの名前がついたフォルダに保存される。
 function uploadImage($image,$key){
     //ファイル名を取得する。
     $fileName = $image['name'];
@@ -78,7 +101,7 @@ function uploadImage($image,$key){
         //一時的に保存された画像ファイルを移動させる。
         move_uploaded_file($image['tmp_name'] , '../image/'.$key.'_image/'.$fileName);
 
-        /*--------------------画像のリザイズ処理を行う--------------------*/
+        --------------------画像のリザイズ処理を行う--------------------
 
         //画像のサイズを取得する。
         list($width,$height) = getimagesize('../image/'.$key.'_image/'.$fileName);
@@ -99,7 +122,6 @@ function uploadImage($image,$key){
                 imagejpeg($thumbnail, '../image/'.$key.'_image/'.$imageName);
                 break;
             case ".png":
-                //上記と同様の処理を行う。
                 $baseImage = imagecreatefrompng('../image/'.$key.'_image/'.$fileName);
                 $thumbnail = imagecreatetruecolor(300, 300);
                 imagecopyresampled($thumbnail, $baseImage, 0, 0, 0, 0, 300, 300, $width, $height);
@@ -107,7 +129,6 @@ function uploadImage($image,$key){
                 imagepng($thumbnail, '../image/'.$key.'_image/'.$imageName);
                 break;
             case ".gif":
-                //上記と同様の処理を行う。
                 $baseImage = imagecreatefromgif('../image/'.$key.'_image/'.$fileName);
                 $thumbnail = imagecreatetruecolor(300, 300);
                 imagecopyresampled($thumbnail, $baseImage, 0, 0, 0, 0, 300, 300, $width, $height);
@@ -119,24 +140,19 @@ function uploadImage($image,$key){
     //リサイズ処理を行う前の画像が保存されている状態なのでそれを削除する
     unlink('../image/'.$key.'_image/'.$fileName);
     return $imageName;
-}
+} 
+*/
 
 /*-----------------------
 DB接続用
  ------------------------*/
 function dbConnect(){
-    //$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-    //$server = $url["host"];
-    //$user = $url["user"];
-    //$pass = $url["pass"];
-    //$dbname = substr($url["path"], 1);
-
-    //$db = new PDO(
-    //'mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass);
-    $db_name = "mysql:dbname=heroku_88a6666fafc2c63;host=us-cdbr-iron-east-03.cleardb.net;";
-    $db_user = "b9793777d2c56b";
-    $db_pass = "890ac4ff";
-    $db = new PDO($db_name, $db_user, $db_pass);
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $server = $url["host"];
+    $user = $url["user"];
+    $pass = $url["pass"];
+    $dbname = substr($url["path"], 1);
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass); 
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する

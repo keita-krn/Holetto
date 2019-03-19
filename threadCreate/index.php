@@ -19,7 +19,7 @@ if(!empty($_POST)){
     if(empty($check)){
         $_SESSION['threadCreate'] = $_POST;
         $_SESSION['threadCreate']['categoryid'] = $_REQUEST['id'];
-        $_SESSION['threadCreate']['threadimage'] = uploadImage($_FILES['threadimage'],'thread');
+        $_SESSION['threadCreate']['threadimage'] = uploadImageToCloudinary($_FILES['threadimage'],'thread');
         header('Location:threadCreateConfirm.php');
         exit();
     }

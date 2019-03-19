@@ -27,7 +27,7 @@ if(!empty($_POST)){
         //パスワードはハッシュ化して格納する
         $hash_pass = password_hash($_SESSION['userCreate']['password'], PASSWORD_DEFAULT);
         $_SESSION['userCreate']['password'] = $hash_pass;
-        $_SESSION['userCreate']['image'] = uploadImage($_FILES['image'],'user');
+        $_SESSION['userCreate']['image'] = uploadImageToCloudinary($_FILES['image'],'user');
         header('Location: userCreateConfirm.php');
         exit();
     } 

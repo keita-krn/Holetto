@@ -33,7 +33,7 @@ if(!empty($_POST)){
     <?php require_once('../header.php') ?>    
     <div class="introduce">
             <div class="categoryimage">
-                <img src="../image/category_image/<?=h($_SESSION['categoryinfo']['category_image'])?>">
+                <img src="<?=h($_SESSION['categoryinfo']['category_image'])?>">
             </div>
             <div class="categoryinfo">
                 <table class="category_info_table">
@@ -71,7 +71,7 @@ if(!empty($_POST)){
                         <span class="categorysentence"><?=h($_SESSION['categoryinfo']['user_name'])?></span>
                     </td>
                     <td>
-                        <img src="../image/user_image/<?=h($_SESSION['categoryinfo']['user_image'])?>" class="userimage">
+                        <img src="<?=h($_SESSION['categoryinfo']['user_image'])?>" class="userimage">
                     </td>
                 </tr>
                 </table>
@@ -99,7 +99,7 @@ if(!empty($_POST)){
                     </tr>
                     <tr>
                         <td>
-                            <img src="../image/thread_image/<?=h($_SESSION['threadCreate']['threadimage'])?>" 
+                            <img src="<?=h($_SESSION['threadCreate']['threadimage'])?>" 
                             width="100" height="100" alt="" />
                         </td>
                         <td></td>

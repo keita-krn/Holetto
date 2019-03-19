@@ -52,7 +52,7 @@ if(!isset($_SESSION['userCreate'])){
                         <td>プロフィール画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="../image/user_image/<?=h($_SESSION['userCreate']['image'])?>" 
+                    <img src="<?=h($_SESSION['userCreate']['image'])?>" 
                     width="100" height="100" alt="" class="confirmimage"/></td><td></td>
                     </tr>
                 </table>

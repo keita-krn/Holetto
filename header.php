@@ -36,7 +36,7 @@ if(!file_exists('image/bg-image/logo.png')){
             <!--ログイン時に表示する内容-->
             <?php if(!empty($_SESSION['userName'])): ?>
                 <div class="menu_box">                                    
-                    <img src="<?=$f?>image/user_image/<?=h($_SESSION['userImage'])?>" 
+                    <img src="<?=h($_SESSION['userImage'])?>" 
                         alt="" class="user_image"/>                                                       
                     <a href="<?=$f?>mypage.php?id=<?=$_SESSION['userId']?>" class="user_name">
                         <?=h($_SESSION['userName'])?>

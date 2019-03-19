@@ -26,7 +26,7 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
     <?php require_once('header.php') ?>
     <div class="introduce">
         <div class="categoryimage">
-            <img src="image/user_image/<?=h($userInfo['user_image'])?>">
+            <img src="<?=h($userInfo['user_image'])?>">
         </div>
         <div class="categoryinfo">
             <table class="category_info_table">
