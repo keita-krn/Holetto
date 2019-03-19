@@ -54,7 +54,7 @@ function uploadImageToCloudinary($image, $key){
             $result = \Cloudinary\Uploader::upload($image['tmp_name']);
         break;
         default:
-            $result = \Cloudinary\Uploader::upload($image['tmp_name'],array("width" => 300, "height" => 300, "crop" => "fill"));
+            $result = \Cloudinary\Uploader::upload($image['tmp_name'],array("width" => 300, "height" => 300));
         break;
     }
     return $result["secure_url"];    
