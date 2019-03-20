@@ -7,7 +7,11 @@ if(!isset($_SESSION['userCreate'])){
     header('Location:../index.php');
     exit();
 }
- if(!empty($_POST)){
+//imageフォルダから画像を読み込む際の処理
+if(mb_substr($_SESSION['userCreate']['image'], 0,5) === "image"){
+    $_SESSION['userCreate']['image'] = "../".$_SESSION['userCreate']['image'];
+}
+if(!empty($_POST)){
     //ユーザー登録処理を行う
     insertUserInfo($_SESSION['userCreate']['username'],$_SESSION['userCreate']['email'],$_SESSION['userCreate']['password'],$_SESSION['userCreate']['image']);
     //セッションの中身を削除する

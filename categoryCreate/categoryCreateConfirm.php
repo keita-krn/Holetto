@@ -9,6 +9,12 @@ if(empty($_SESSION['categoryCreate'])){
         exit();
     }
 }
+
+//imageフォルダから画像を読み込む際の処理
+if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
+    $_SESSION['categoryCreate']['categoryimage'] = "../".$_SESSION['categoryCreate']['categoryimage'];
+}
+
  if(!empty($_POST)){
     //カテゴリー登録処理を行う
     $result = insertCategoryInfo($_SESSION['categoryCreate']['categoryname'],$_SESSION['categoryCreate']['categoryintroduce'],
@@ -36,7 +42,7 @@ if(empty($_SESSION['categoryCreate'])){
     <?php require_once('../header.php') ?>
     <div class="contains">
         <div class="image">
-            <img src="../image/jean-wimmerlin-528433-unsplash.jpg">
+            <img src="../image/tim-zankert-483708-unsplash.jpg">
         </div>
         <div class="container">
             <img src="../image/logo.png">

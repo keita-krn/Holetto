@@ -19,7 +19,12 @@ if(!empty($_POST)){
     if(empty($check)){
         $_SESSION['threadCreate'] = $_POST;
         $_SESSION['threadCreate']['categoryid'] = $_REQUEST['id'];
-        $_SESSION['threadCreate']['threadimage'] = uploadImageToCloudinary($_FILES['threadimage'],'thread');
+        if($_FILES['threadimage']['name'] === ''){
+            //画像が投稿されなかった場合はサムネイルにNo Image画像を採用する。
+            $_SESSION['threadCreate']['threadimage'] = "image/noimage.png";
+        }else{
+            $_SESSION['threadCreate']['threadimage'] = uploadImageToCloudinary($_FILES['threadimage'],'thread');
+        }
         header('Location:threadCreateConfirm.php');
         exit();
     }

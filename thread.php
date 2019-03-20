@@ -23,8 +23,11 @@ if(!empty($_POST)){
  
     $check = array_filter($error);
     if(empty($check)){
-        //画像をアップロードする
-        $commentImage = uploadImageToCloudinary($_FILES['commentimage'],"comment");
+        if($_FILES['commentimage']['name'] === ''){
+            $commentImage = "noimage";
+        }else{
+            $commentImage = uploadImageToCloudinary($_FILES['commentimage'],"comment");
+        }
         //comment_tableに情報を格納する
         if(empty($_POST['reply_comment_id']))
             $success = insertComment($_POST['comment'],$thread_id,$_SESSION['userId'],$commentImage,0);
