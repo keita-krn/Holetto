@@ -40,7 +40,7 @@ function checkImage($image){
 
 //Cloudinaryに画像をアップロードし、その画像ファイルのURLを返す。
 function uploadImageToCloudinary($image, $key){
-    require_once("./vendor/autoload.php");
+    require_once("vendor/autoload.php");
 
     $account = parse_url(getenv('CLOUDINARY_URL'));
     \Cloudinary::config(array(
