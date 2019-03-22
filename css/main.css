@@ -19,7 +19,10 @@ a {
     background-image:url(../image/rhand-mccoy-621729-unsplash.jpg); 
 }
 .thread_body{
-    background-image:url(../image/nathan-anderson-178671-unsplash.jpg);
+    background-image:url(../image/nasa-538841-unsplash.jpg);
+}
+.error_body{
+    background-image:url(../image/andrew-rice-4334221-unsplash.jpg);
 }
 .introduce{
     display:inline-block;
@@ -67,6 +70,9 @@ a {
 .categoryname{
     font-size:20px;
 }
+.link{
+    color:rgb(12, 144, 221);
+}
 .categorysentence{
     font-size:11px;
 }
@@ -94,7 +100,7 @@ a {
 .thread-header{
     text-align:center;
     font-size:15px;
-    font-weight:;
+    font-weight:normal;
 }
 .createthreadconfirm{
     background-color:white;
@@ -156,7 +162,7 @@ a {
 /*-----------------------------------------
 　search.php
 -----------------------------------------*/
-.keyword_box{
+.top_box{
     margin-top:60px;
     margin-left:auto;
     margin-right:auto;
@@ -234,6 +240,13 @@ a {
     font-size:12px;
     color:gray;
 }
+.update_user_image{
+    color: rgb(26, 87, 179);
+    cursor:pointer;
+}
+.updateUserImage{
+    display: none;
+}
 .deleteAccount{
     color:rgb(138, 7, 7);
     font-size:9px;
@@ -261,7 +274,7 @@ a {
     display:inline-block;
     vertical-align:top;
     width:730px;
-    background-color:rgba(255,255,255,0.9);
+    background-color:#F2F2F2;
     border-radius:10px;
     padding:5px 15px;
     margin-bottom:80px;
@@ -276,13 +289,13 @@ a {
     margin-bottom:80px;
 }
 .categoryinfointhread{
-    background-color:rgba(255,255,255,0.9);
+    background-color:#F2F2F2;
     border-radius:10px;
     padding:10px;
     margin-bottom:10px;
 }
 .commentform{
-    background-color:rgba(255,255,255,0.9);
+    background-color:#F2F2F2;
     border-radius:10px;
     padding:10px;
 }

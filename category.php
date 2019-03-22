@@ -10,20 +10,17 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
     $page = $_REQUEST['page'];
     //カテゴリーの詳細情報を取得する  
     $info = getCategoryInfo($category_id);
-    
-    //ページネーション処理を行うための準備をする
+    if(empty($info)){
+        header('Location:index.php');
+    }
     //ある特定のカテゴリーに属するスレッドの個数を取得する
     $count = getThreadCount($category_id);
-
     //必要なページ数を求める（１ページ毎に10件表示する）
     $maxPage = ceil($count / 10); 
-
     //pageパラメータを元にSQL文のLIMITのスタート位置を求める
     $start = 10 * ($page - 1); 
-
     //カテゴリーIDと一致するスレッドの情報を10件取得する（そのスレッドについたコメントの投稿時間が新しい順に並べる）
     $threads = getThreadsByCategoryId($category_id, $start);
-
     //セッションに必要な情報を格納する（スレッド作成ページで使用）
     $_SESSION['categoryinfo'] = $info;
 }
@@ -114,7 +111,8 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
     <div class="threads">
         <div class="thread-header">
             <?php if($count === 0): ?>
-                <h2>まだこのカテゴリーにはスレッドがありません。</h2>
+                <h2>まだこのカテゴリーにはスレッドがありません…</h2>
+                
             <?php else: ?>
                 <h2>スレッド一覧(<?=$count?>件)</h2>
             <?php endif; ?>

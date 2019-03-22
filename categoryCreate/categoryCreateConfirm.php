@@ -12,7 +12,7 @@ if(empty($_SESSION['categoryCreate'])){
 
 //imageフォルダから画像を読み込む際の処理
 if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
-    $_SESSION['categoryCreate']['categoryimage'] = "../".$_SESSION['categoryCreate']['categoryimage'];
+    $c = "../";
 }
 
  if(!empty($_POST)){
@@ -62,7 +62,7 @@ if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
                         <td>サムネイル画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="<?=$_SESSION['categoryCreate']['categoryimage']?>" 
+                    <img src="<?php if(!empty($c)){echo $c;}?><?=$_SESSION['categoryCreate']['categoryimage']?>" 
                     width="100" height="100" alt=""/></td><td></td>
                     </tr>
                 </table>

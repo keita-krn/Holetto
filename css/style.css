@@ -14,6 +14,9 @@ a {
 }
 /*ヘッダー部分*/
 .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     position:fixed;
     top:0px;
     left:0px;
@@ -22,7 +25,6 @@ a {
     background-color:#fff;
     z-index:10;
     border-bottom:1px solid lightgray;
-    line-height:50px;
 }
 .header img{
     max-width:150px;
@@ -34,20 +36,15 @@ a {
     left: 10px;
 }
 
-.top-logo,.searchbox,.menu{
-    display:inline-block;
-    vertical-align: top;
+.top-logo,.searchbox,.menu_box{
     width: 33%;
 }
-.menu{
-    position:relative;
-}
 .menu_box{
-    position:absolute;
-    right:10px;
-    height:50px;
-    display: flex;
-	align-items: center;
+    text-align:right;
+    line-height:50px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
 }
 .user_image{
     width:30px;
@@ -127,11 +124,11 @@ a {
 /*ウェルカム部分*/
 .welcome{
     text-align:center;
-    margin-top:30px;
+    margin-top:25px;
     background-image: url(../image/andy-holmes-706446-unsplash.jpg);
     background-size: cover;
     width:100%;
-    height:260px;
+    height:245px;
     color:white;
 }
 .welcome p{
@@ -165,22 +162,24 @@ a {
 }
 /*フォーム部分*/
 .main{
-    width:90%;
     margin-left:auto;
     margin-right:auto;
-    margin-top:10px;
+    margin-top:5px;
+    text-align:center;
 }
 .category{
+    --length: calc(100vw / 9);
     display:inline-block;
-    width:180px;
-    height:180px;
+    width:var(--length);
+    height:var(--length);
     border-radius:5px;
     overflow: hidden;
     position: relative;
 }
 .category img{
-    width:180px;
-    height:180px;
+    --length: calc(100vw / 9);
+    width:var(--length);
+    height:auto;
     filter:brightness(75%);
 }
 .category p {
@@ -218,14 +217,24 @@ a {
     background-color:rgba(255,255,255,0.9);
     z-index: 10;
   }
-  @media screen and (max-width: 1024px) and (orientation: portrait){
-    .searchbox{
+  /*スマホ用（カテゴリーは縦2列）*/
+  @media screen and (max-width: 480px) {
+    .searchbox,.menu{
         display:none;
     }
-  }
-  /*スマホ用レイアウト*/
-  @media screen and (max-width: 480px) {
-.searchbox,.menu{
-    display:none;
-}
+    .category{
+        --length: calc(100vw / 4);
+        display:inline-block;
+        width:var(--length);
+        height:var(--length);
+        border-radius:5px;
+        overflow: hidden;
+        position: relative;
+    }
+    .category img{
+        --length: calc(100vw / 4);
+        width:var(--length);
+        height:auto;
+        filter:brightness(75%);
+    }
   }

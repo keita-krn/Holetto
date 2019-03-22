@@ -60,12 +60,19 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
                     <span class="categorysentence"><?=h($userInfo['insert_date'])?></span>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <a href="delete.php?user_id=<?=$_SESSION['userId']?>" class="deleteAccount" 
-                    onclick="return confirm('本当に削除します。よろしいですか？')">このアカウントを削除する</a>
-                </td>
-            </tr>
+            <?php if($_SESSION['userId'] == $user_id): ?>
+                <tr>
+                    <td>
+                        <label class="update_user_image">プロフィール画像を変更する<input type="file" name="user_image" class="updateUserImage"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="delete.php?user_id=<?=$_SESSION['userId']?>" class="deleteAccount" 
+                        onclick="return confirm('本当に削除します。よろしいですか？')">このアカウントを削除する</a>
+                    </td>
+                </tr>
+            <?php endif; ?>
             </table>
         </div>
     </div>

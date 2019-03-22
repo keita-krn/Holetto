@@ -6,10 +6,7 @@ $keywords = $_GET['keyword'];
 if(empty($keywords)){
     $errorMessage = '検索ワードを指定してください。';
 }else{
-    //全角スペースを半角スペースに変換
-    $keywords = preg_replace('/　/', ' ', $keywords);
-    //連続する半角スペースを1つの半角スペースに変換する
-    $keywords = preg_replace('/\s+/', ' ', $keywords);
+    $keywords = ChangeSpacesIntoOneHalfWidthSpace($keywords);
     //半角スペースで区切って配列化する
     $keywords = explode(' ', $keywords);
 
@@ -41,7 +38,7 @@ if(empty($categories) && empty($threads)){
 <body class="search_body">
     <!--ヘッダー部分-->
     <?php require_once('header.php') ?>
-    <div class="keyword_box">
+    <div class="top_box">
         <?php if(empty($errorMessage)): ?>
             <i class="fas fa-search fa-2x"></i>　検索ワード：
             <?php foreach($keywords as $keyword){ echo ' '.h($keyword); } ?><br><?=$message?>
@@ -56,7 +53,7 @@ if(empty($categories) && empty($threads)){
             <?php foreach($categories as $category): ?>
                 <div class="categoryByKeywords">
                     <div class="categoryimageByKeywords">
-                        <img src="<?$category['category_image']?>">
+                        <img src="<?=$category['category_image']?>">
                     </div>
                     <div class="categoryinfoByKeywords">
                         <a href="category.php?id=<?=$category['id']?>&page=1">
@@ -75,7 +72,7 @@ if(empty($categories) && empty($threads)){
             <?php foreach($threads as $thread): ?>
                 <div class="threadByKeywords">
                     <div class="threadimageByKeywords">
-                        <img src="<?$thread['thread_image']?>">
+                        <img src="<?=$thread['thread_image']?>">
                     </div>
                     <div class="threadinfoByKeywords">
                         <a href="thread.php?id=<?=$thread['id']?>">

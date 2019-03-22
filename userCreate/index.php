@@ -3,25 +3,43 @@ require('../functions.php');
 session_start();
 
 if(!empty($_POST)){
+    $user_name = $_POST['username'];
+    $email = $_POST['email'];
+    $pass = $_POST['password'];
+    $pass2 = $_POST['password2'];
+    $image = $_FILES['image'];
+
     //入力チェックを行い、エラー項目がある場合はエラーメッセージを取得する
-    $error['username'] = checkInput('ユーザー名',$_POST['username'],1,15);
-    $error['email'] = checkInput('メールアドレス',$_POST['email'],1,50);
-    $error['password'] = checkInput('パスワード',$_POST['password'],5,30); 
+    $error['username'] = checkInput('ユーザー名',$user_name,1,15);
+    $error['email'] = checkInput('メールアドレス',$email,1,50);
+    $error['password'] = checkInput('パスワード',$pass,5,30); 
     //確認用のパスワードをチェックする
-    if($_POST['password2'] === ''){
+    if($pass2 === ''){
         $error['password2'] = "*確認用のパスワードを入力してください";
-    }else if($_POST['password'] != $_POST['password2']){
+    }else if($pass != $pass2){
         $error['password2'] = "*１回目の入力と異なります。";
     }
     //画像ファイルの拡張子が正しいか、サイズが大きすぎないかどうかチェックする
-    $error['image'] = checkImage($_FILES['image']);
-    //メールアドレスがすでに登録されていないかチェックする
-    if(!empty($_POST['email'])){
-            $error['email'] = isExistUserInfo($_POST['email']);
+    $error['image'] = checkImage($image);
+    //メールアドレス形式チェック
+    if(empty($error['email'])){
+        $error['email'] = checkValidEmail($email);
+    }
+    //パスワード形式チェック
+    if(empty($error['pass'])){
+        $error['pass'] = checkValidPass($pass);
+    }
+    //入力されたユーザー名がすでに使われていないかチェックする
+    if(empty($error['username'])){
+        $error['username'] = checkExistUserName($user_name);
+    }
+    //入力されたメールアドレスがすでに登録されていないかチェックする
+    if(empty($error['email'])){
+        $error['email'] = checkExistUserEmail($email);
     }
     //全ての項目が埋まっている場合（確認画面へ）
-    $check = array_filter($error);
-    if(empty($check)){
+    $error = array_filter($error);
+    if(empty($error)){
         //セッションに情報を格納する。画像はリザイズ処理を行いアップロードする
         $_SESSION['userCreate'] = $_POST;
         //パスワードはハッシュ化して格納する
@@ -58,7 +76,7 @@ $error['rewrite'] = true;
         </div>
         <div class="container">
             <img src="../image/logo.png">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data"><?=var_dump(array_filter($error))?>
                 <div class="text">
                     <label>ユーザー名</label>
                     <span class="error"><?php if(!empty($error['username'])){ echo $error['username']; } ?></span>
@@ -72,7 +90,7 @@ $error['rewrite'] = true;
                         value="<?=h($_POST['email'])?>"/>
                 </div>
                 <div class="text">
-                    <label>パスワード</label>
+                    <label>パスワード(半角英数字を含む5~30文字)</label>
                     <span class="error"><?php if(!empty($error['password'])){ echo $error['password']; } ?></span>
                     <input type="password" name="password" size="10" maxlength="30" 
                         value=""/>

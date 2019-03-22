@@ -4,24 +4,26 @@ session_start();
 
 if(!empty($_POST)){
     //入力チェックを行う
-    $error['email'] = checkInput('メールアドレス',$_POST['email'],1,50);
-    $error['password'] = checkInput('パスワード',$_POST['password'],5,30);   
+    $error['login'] = checkInput('ユーザー名またはパスワード',$_POST['login'],1,50);
+    $error['password'] = checkInput('パスワード',$_POST['password'],5,30);
     
-        //入力された値を元にuser_tableから情報を取得する
-        $result = getUserInfoByEmail($_POST['email']);
-        //入力された値とハッシュ化した文字列を比較する。一致した場合はtrueを返す⇒ログイン成功
+    $error = array_filter($error);   
+    if(empty($error)){
+        //入力された値を元にuser_tableからパスワードを取得する
+        $result = getUserInfoToLogin($_POST['login']);
+        //入力された値とハッシュ化したパスワードを比較する。一致した場合はtrueを返す⇒ログイン成功
         if(password_verify($_POST['password'], $result['password'])){ 
             session_regenerate_id();
             $_SESSION['userId'] = $result['id'];
             $_SESSION['userName'] = $result['user_name'];
             $_SESSION['userImage'] = $result['user_image'];
             $_SESSION['time'] = time();
-           
             header('Location: index.php');
             exit();
         }else{
-            $error['login'] = "*メールアドレスまたはパスワードが間違っています。";        
-        }   
+            $error['diff'] = "*ユーザー名、メールアドレスまたはパスワードが異なります。";        
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -42,9 +44,9 @@ if(!empty($_POST)){
 <img src="image/logo.png">
 <form action="" method="post">
     <div class="text">
-        <label>メールアドレス</label>
-        <span class="error"><?php if(!empty($error['email'])){ echo $error['email']; } ?></span>
-        <input type="text" name="email" size="35" maxlength="50" value="<?=h($_POST['email'])?>"/>
+        <label>ユーザー名またはメールアドレス</label>
+        <span class="error"><?php if(!empty($error['login'])){ echo $error['login']; } ?></span>
+        <input type="text" name="login" size="35" maxlength="50" value="<?=h($_POST['login'])?>"/>
     </div>
     <div class="text">
         <label>パスワード</label>
@@ -52,7 +54,7 @@ if(!empty($_POST)){
         <input type="password" name="password" size="35" maxlength="30" value="<?=h($_POST['password'])?>"/>
     </div>
     <div class="check">
-        <span class="error"><?php if(!empty($error['login'])){ echo $error['login']; } ?></span>
+        <span class="error"><?php if(!empty($error['diff'])){ echo $error['diff']; } ?></span>
         <!-- <input id="save" type="checkbox" name="save" value="on"><label for="save">次回から自動的にログインする</label> -->
     </div>
     <div class="sendbtn">

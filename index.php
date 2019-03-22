@@ -11,6 +11,7 @@ $categories = getCategories();
     <meta charset="UTF-8">
     <title>Holetto</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 <body>
 <!--ヘッダー部分-->
@@ -42,7 +43,8 @@ $categories = getCategories();
                     </p>
                 </div>
             </a>
-    <?php endforeach ?>
+        <?php endforeach ?>
+    </div>
 </div>
 
 </div>

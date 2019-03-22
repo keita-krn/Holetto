@@ -11,13 +11,38 @@ function cut($sentence, $num){
         return $sentence;
     }
 }
+//（連続する）スペースを1つの半角スペースに変換する
+function ChangeSpacesIntoOneHalfWidthSpace($value){
+    $value = preg_replace('/　/', ' ', $value);
+    $value = preg_replace('/\s+/', ' ', $value);
+    return $value;
+}
 //入力された内容をチェックする処理を行う
 function checkInput($propertyName,$value,$minLength,$maxLength){
-    $errorMessage = '';
-    if($value === ''){
-        $errorMessage .= '*'.$propertyName.'を入力してください。';
-    }else if(mb_strlen($value) < $minLength || mb_strlen($value) > $maxLength ){
-        $errorMessage .= '*'.$propertyName.'は'.$minLength.'文字以上'.$maxLength.'文字以下で入力してください。';
+    $value = ChangeSpacesIntoOneHalfWidthSpace($value);
+    if($value === '' || $value === ' '){
+        $errorMessage = '*入力が行われていません。';
+        return $errorMessage;
+    }
+    if(mb_strlen($value) < $minLength || mb_strlen($value) > $maxLength ){
+        if($minLength != 1){
+            $errorMessage = '*'.$propertyName.'は'.$minLength.'文字以上'.$maxLength.'文字以内で入力してください。';
+        }else{
+            $errorMessage = '*'.$propertyName.'は'.$maxLength.'文字以内で入力してください。';
+        }
+    }
+    return $errorMessage;
+}
+function checkValidEmail($email){
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) === false){
+        $errorMessage = '*正しい形式で入力してください。';
+    }
+    return $errorMessage;
+}
+//パスワードが半角英数字をそれぞれ1種類以上含む5文字以上30文字以下であるかどうかチェックする
+function checkValidPass($pass){
+    if(!preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{5,30}+\z/i', $pass)){
+        $errorMessage = '*正しい形式で入力してください。';
     }
     return $errorMessage;
 }
@@ -26,6 +51,7 @@ function checkImage($image){
     $errorMessage = '';
     $fileName = $image['name'];
     $ext = substr($fileName, -4);
+
     //画像がアップされていない場合はエラーメッセージを出さない（No Image画像を表示する）
     if($ext === ''){
         return $errorMessage;
@@ -41,13 +67,14 @@ function checkImage($image){
 //Cloudinaryに画像をアップロードし、その画像ファイルのURLを返す。
 function uploadImageToCloudinary($image, $key){
     require_once("vendor/autoload.php");
-
+    
     $account = parse_url(getenv('CLOUDINARY_URL'));
     \Cloudinary::config(array(
         "cloud_name" => $account['host'],
         "api_key" => $account['user'],
         "api_secret" => $account['pass']
     )); 
+
     switch($key){
         case "thread":
         case "comment":
@@ -152,7 +179,8 @@ function dbConnect(){
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
-    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass); 
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'")); 
+    
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
@@ -164,7 +192,22 @@ function dbConnect(){
 /*-----------------------
   userCreateで使用する関数
  ------------------------*/
- function isExistUserInfo($email){
+ function checkExistUserName($name){
+    try{
+        $db = dbConnect();
+        $sql = 'SELECT COUNT(*) AS cnt FROM user_table WHERE user_name = ?';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $name, PDO::PARAM_STR);
+        $stmt->execute();
+        $count = $stmt->fetch();
+        if($count['cnt'] > 0){
+            return "*そのユーザー名は既に使用されています。";
+        }
+    }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+    }   
+ }
+ function checkExistUserEmail($email){
     try{
         $db = dbConnect();
         $sql = 'SELECT COUNT(*) AS cnt FROM user_table WHERE email = ?';
@@ -209,12 +252,13 @@ function getCategories(){
 login.phpで使用する関数
  ------------------------*/
  //パスワード確認メソッド
-function getUserInfoByEmail($email){
+function getUserInfoToLogin($value){
     try{
         $db = dbConnect();
-        $sql = 'SELECT * FROM user_table WHERE email = ?';
+        $sql = 'SELECT * FROM user_table WHERE user_name = ? OR email = ?';
         $statement = $db->prepare($sql);
-        $statement->bindValue(1,$email,PDO::PARAM_STR);
+        $statement->bindValue(1, $value, PDO::PARAM_STR);
+        $statement->bindValue(2, $value, PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetch();
     }catch(PDOException $e){
@@ -565,6 +609,7 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
          echo 'DB接続エラー：'.$e->getMessage();
     }
  }
+
  function deleteUser($user_id){
     try{
        $db = dbConnect();
@@ -575,4 +620,4 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
   }catch(PDOException $e){
        echo 'DB接続エラー：'.$e->getMessage();        
     }
-}
+ }

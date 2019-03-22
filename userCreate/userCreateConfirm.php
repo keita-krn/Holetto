@@ -9,7 +9,7 @@ if(!isset($_SESSION['userCreate'])){
 }
 //imageフォルダから画像を読み込む際の処理
 if(mb_substr($_SESSION['userCreate']['image'], 0,5) === "image"){
-    $_SESSION['userCreate']['image'] = "../".$_SESSION['userCreate']['image'];
+    $c = "../";
 }
 if(!empty($_POST)){
     //ユーザー登録処理を行う
@@ -56,7 +56,7 @@ if(!empty($_POST)){
                         <td>プロフィール画像</td><td></td>
                     </tr>
                     <tr><td>
-                    <img src="<?=$_SESSION['userCreate']['image']?>" 
+                    <img src="<?php if(!empty($c)){echo $c;}?><?=$_SESSION['userCreate']['image']?>" 
                     width="100" height="100" alt="" class="confirmimage"/></td><td></td>
                     </tr>
                 </table>

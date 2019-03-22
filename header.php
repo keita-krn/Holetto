@@ -3,7 +3,7 @@ session_start();
 require_once('functions.php');
 
 //iframeタグは階層が違うファイルを参照できない為、参照する為の処理を行う。
-if(!file_exists('image/bg-image/logo.png')){
+if(!file_exists('image/logo.png')){
     $f = '../';
 }else{
     $f = '';
@@ -30,9 +30,7 @@ if(!file_exists('image/bg-image/logo.png')){
                 <input type="submit" value="&#xf002"/>
             </div>
         </form>
-    </div>
-    <div class="menu">
-        
+    </div>    
             <!--ログイン時に表示する内容-->
             <?php if(!empty($_SESSION['userName'])): ?>
                 <div class="menu_box">                                    
@@ -56,6 +54,4 @@ if(!file_exists('image/bg-image/logo.png')){
                     <a href="<?=$f?>userCreate/index.php" class="btn">ユーザー登録</a>
                 </div>
             <?php endif; ?>
-        
-    </div>
 </div>

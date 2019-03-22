@@ -81,7 +81,7 @@ if(!empty($_POST)){
         </table>
         <h2><?=h($info['title'])?></h2>
         <p><?=nl2br(h($info['first_comment']))?></p>
-        <?php if($info['thread_image'] != "noimage.png"): ?>
+        <?php if($info['thread_image'] != "image/noimage.png"): ?>
             <img src="<?=$info['thread_image']?>" class="threadImage">
         <?php endif; ?>
         </div>
@@ -184,7 +184,7 @@ if(!empty($_POST)){
                 <tr>
                     <td>
                         <a href="category.php?id=<?=$info['category_id']?>&page=1">
-                        <span class="categoryname"><?=h($info['category_name'])?></span>
+                        <span class="categoryname link"><?=h($info['category_name'])?></span>
                         </a>
                     </td>
                 </tr>
