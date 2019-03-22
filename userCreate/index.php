@@ -76,7 +76,7 @@ $error['rewrite'] = true;
         </div>
         <div class="container">
             <img src="../image/logo.png">
-            <form action="" method="post" enctype="multipart/form-data"><?=var_dump(array_filter($error))?>
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="text">
                     <label>ユーザー名</label>
                     <span class="error"><?php if(!empty($error['username'])){ echo $error['username']; } ?></span>
