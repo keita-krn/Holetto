@@ -1,3 +1,3 @@
 # Holetto
 会員登録制の掲示板 / Webアプリケーション
-![holetto](https://user-images.githubusercontent.com/46701811/54836908-88b2b100-4d08-11e9-9dcc-16e64cb33d53.png)
+![holetto_toppage](https://user-images.githubusercontent.com/46701811/54860058-f76b2b00-4d57-11e9-9ef2-8614d1eedb9d.png)
