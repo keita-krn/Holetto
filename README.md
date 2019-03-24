@@ -4,7 +4,7 @@
 書き込みを行う事ができる。カテゴリーは自分で作成することができる。
 <br>
 ## トップ画面
-<img src="https://user-images.githubusercontent.com/46701811/54836908-88b2b100-4d08-11e9-9dcc-16e64cb33d53.png" width="500">
+<img src="https://user-images.githubusercontent.com/46701811/54836908-88b2b100-4d08-11e9-9dcc-16e64cb33d53.png" width="500"/>
 ## テストユーザー
 - ユーザー名:guest
 - パスワード:guest123
