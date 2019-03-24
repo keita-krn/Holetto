@@ -44,4 +44,4 @@
   - Font Awesome
   - Ajax
 - インフラ
- - Heroku
+  - Heroku
