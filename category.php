@@ -94,17 +94,14 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
                 <?php endif; ?>
             </tr>
             </table>
-                <p>         
-                    <!------スレッド作成時にログイン状態でない場合はログイン画面へ移動する------>
-                    <i class="fas fa-pen-alt"></i>  
-                    <?php if(empty($_SESSION['userName'])): ?>
-                        <a href="login.php" class="newThread">
-                    <?php else: ?>
-                        <a href="threadCreate/index.php?id=<?=h($info['category_id'])?>" class="newThread">
-                    <?php endif; ?>   
-                    新規にスレッドを作成する
-                    </a>
-                </p>
+                <?php if(!empty($_SESSION['userName'])): ?>
+                    <p>         
+                        <i class="fas fa-pen-alt"></i>  
+                            <a href="threadCreate/index.php?id=<?=h($info['category_id'])?>" class="newThread"> 
+                                新規にスレッドを作成する
+                            </a>
+                    </p>
+                <?php endif; ?>
         </div>
     </div>
     <!----------------------スレッド一覧表示部分---------------------->
@@ -112,7 +109,6 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
         <div class="thread-header">
             <?php if($count === 0): ?>
                 <h2>まだこのカテゴリーにはスレッドがありません…</h2>
-                
             <?php else: ?>
                 <h2>スレッド一覧(<?=$count?>件)</h2>
             <?php endif; ?>

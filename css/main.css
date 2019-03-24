@@ -42,7 +42,7 @@ a {
     padding:10px;
     border-radius:8px;
     text-align:left;
-    margin-bottom:10px;
+    margin-bottom:80px;
 }
 .categoryimage{
     margin:10px;
@@ -70,7 +70,7 @@ a {
 .categoryname{
     font-size:20px;
 }
-.link{
+.link a{
     color:rgb(12, 144, 221);
 }
 .categorysentence{
@@ -127,7 +127,7 @@ a {
 .threadinfo{
     display:inline-block;
     vertical-align: top;
-    width:400px;
+    width:450px;
     margin:10px;
     padding:0;
 }
@@ -158,6 +158,10 @@ a {
 }
 .pagemenu a{
     color:steelblue;
+}
+.confirm_thread_image{
+    width:300px;
+    height:auto;
 }
 /*-----------------------------------------
 　search.php

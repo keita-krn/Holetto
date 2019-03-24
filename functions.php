@@ -179,8 +179,7 @@ function dbConnect(){
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
-    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'")); 
-    
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));   
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
@@ -303,7 +302,7 @@ function getThreadCount($category_id){
 function getThreadsByCategoryId($category_id, $start){
     try{
         $db = dbConnect();
-        $sql = 'SELECT t.title,t.thread_image, t.id AS thread_id, t.insert_date AS created_thread_date, MAX(c.insert_date) AS last_comment_date,
+        $sql = 'SELECT t.title,t.thread_image, t.id AS thread_id, t.insert_date AS created_thread_date, c.insert_date AS last_comment_date,
         u.user_name AS create_thread_user_name
         FROM thread_table t
         LEFT JOIN comment_table c
@@ -311,11 +310,10 @@ function getThreadsByCategoryId($category_id, $start){
         LEFT JOIN user_table u
         ON t.create_thread_user_id = u.id
         WHERE t.category_id = ?
-        GROUP BY t.title
         ORDER BY c.insert_date DESC
         LIMIT ?,10';
         $stmt = $db->prepare($sql);
-         $stmt->bindValue(1, $category_id, PDO::PARAM_INT);
+        $stmt->bindValue(1, $category_id, PDO::PARAM_INT);
         $stmt->bindValue(2, $start, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

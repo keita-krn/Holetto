@@ -7,6 +7,11 @@ if(empty($_SESSION['userId']) || empty($_REQUEST['id'])){
     header('Location:../index.php');
     exit();
 }
+if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
+    $c = "../";
+}else{
+    $c = "";
+}
 //スレッド作成処理を行う
 if(!empty($_POST)){
     //エラー確認を行う
@@ -94,7 +99,7 @@ $error['rewrite'] = true;
                     <span class="categorysentence"><?=h($_SESSION['categoryinfo']['user_name'])?></span>
                 </td>
                 <td>
-                    <img src="<?=$_SESSION['categoryinfo']['user_image']?>" class="userimage">
+                    <img src="<?=$c?><?=$_SESSION['categoryinfo']['user_image']?>" class="userimage">
                 </td>
             </tr>
             </table>

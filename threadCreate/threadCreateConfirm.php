@@ -7,6 +7,11 @@ if(empty($_SESSION['userId'])){
     header('Location:../index.php');
     exit();
 }
+if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
+    $c = "../";
+}else{
+    $c = "";
+}
 //thread_tableに情報を格納する
 if(!empty($_POST)){
     $insert_flag = insertThreadInfo($_SESSION['threadCreate']['threadtitle'],$_SESSION['threadCreate']['firstcomment'],
@@ -71,7 +76,7 @@ if(!empty($_POST)){
                         <span class="categorysentence"><?=h($_SESSION['categoryinfo']['user_name'])?></span>
                     </td>
                     <td>
-                        <img src="<?=$_SESSION['categoryinfo']['user_image']?>" class="userimage">
+                        <img src="<?=$c?><?=$_SESSION['categoryinfo']['user_image']?>" class="userimage">
                     </td>
                 </tr>
                 </table>
@@ -93,14 +98,13 @@ if(!empty($_POST)){
                         <td><?=h($_SESSION['threadCreate']['firstcomment'])?></td>
                     </tr>
                     <!--画像がアップされていない場合は表示しない-->
-                    <?php if($_SESSION['threadCreate']['threadimage'] != "noimage.png"): ?>
+                    <?php if($_SESSION['threadCreate']['threadimage'] != "image/noimage.png"): ?>
                     <tr>
                         <td>アップする画像</td><td></td>
                     </tr>
                     <tr>
                         <td>
-                            <img src="<?=$_SESSION['threadCreate']['threadimage']?>"  
-                            width="100" height="100" alt="" />
+                            <img src="<?=$_SESSION['threadCreate']['threadimage']?>" alt="" class="confirm_thread_image"/>
                         </td>
                         <td></td>
                     </tr>
