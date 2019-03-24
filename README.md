@@ -2,7 +2,7 @@
 会員登録制の掲示板 / Webアプリケーション  
 ユーザーは自分が興味のあるテーマ（カテゴリー）の中でスレッド（掲示板）を作成し、  
 書き込みを行う事ができる。カテゴリーは自分で作成することができる。  
-サイトURL:https://holetto.herokuapp.com
+https://holetto.herokuapp.com
 ## トップ画面
 ![Holetto](https://user-images.githubusercontent.com/46701811/54836908-88b2b100-4d08-11e9-9dcc-16e64cb33d53.png)
 ## テストユーザー
