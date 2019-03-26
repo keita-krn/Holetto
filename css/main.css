@@ -70,7 +70,7 @@ a {
 .categoryname{
     font-size:20px;
 }
-.link a{
+.link a,.pagemenu a,.commentform a{
     color:rgb(12, 144, 221);
 }
 .categorysentence{
@@ -155,9 +155,6 @@ a {
 .pagemenu{
     text-align:center;
     padding-top:5px;
-}
-.pagemenu a{
-    color:steelblue;
 }
 .confirm_thread_image{
     width:300px;

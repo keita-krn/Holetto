@@ -1,9 +1,15 @@
 <?php
 session_start();
-if(empty($_SESSION['userId'])){ //カテゴリー情報と制作者の情報を引き出す
+require_once('../functions.php');
+
+if(empty($_SESSION['userId']) || empty($_SESSION['threadCreate'])){
     header('Location:../index.php');
     exit();
 }
+//作成されたスレッドのIDを取得する
+$thread_id = getThreadIdByTitle($_SESSION['threadCreate']['threadtitle']);
+unset($_SESSION['threadCreate']);
+
 if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
     $c = "../";
 }else{
@@ -78,8 +84,7 @@ if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
     </div>
     <div class="createthread">
                 <p>新規スレッドを作成しました！</p>
-        <p><i class="fas fa-undo-alt"></i> <a href="../category.php?id=<?=$_SESSION['categoryinfo']['category_id']?>&page=1" 
-        class="threadcreatecomplete">カテゴリーページへ戻る</a></p>
+        <p><i class="fas fa-undo-alt"></i> <a href="../thread.php?id=<?=$thread_id?>" class="threadcreatecomplete">作成したスレッドへ移動する</a></p>
     </div>
 <!--フッター部分-->
 <?php require_once('../footer.php'); ?>

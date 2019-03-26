@@ -71,7 +71,9 @@ if(!empty($_POST)){
                     <img src="<?=($info['user_image'])?>" class="createUserImage">
                 </td>
                 <td>
-                    <span class="threadCreater"><?=h($info['thread_creater'])?></span>
+                    <a href="mypage.php?id=<?=$info['user_id']?>">
+                        <span class="threadCreater"><?=h($info['thread_creater'])?></span>
+                    </a>
                 </td>
                 <?php endif; ?>
                 <td>
@@ -97,13 +99,19 @@ if(!empty($_POST)){
                                 <td><span class="threadCreater">退会済みユーザー</span></td>
                             <?php else: ?>
                                 <td><img src="<?=$comment['user_image']?>" class="createUserImage"></td>
-                                <td><span class="threadCreater"><?=h($comment['user_name'])?></span></td>
+                                <td>
+                                    <a href="mypage.php?id=<?=$comment['user_id']?>">
+                                        <span class="threadCreater"><?=h($comment['user_name'])?></span>
+                                    </a>
+                                </td>
                             <?php endif; ?>
                             <td>：<?=$comment['insert_date'] ?></td>
                             <td>
-                                <a href="thread.php?id=<?=$thread_id?>&reply=<?=$comment['comment_id']?>">
-                                    <i class="fas fa-reply-all"></i><span class="reply">返信する</span>
-                                </a>
+                                <?php if(!empty($_SESSION['userId'])): ?>
+                                    <a href="thread.php?id=<?=$thread_id?>&reply=<?=$comment['comment_id']?>">
+                                        <i class="fas fa-reply-all"></i><span class="reply">返信する</span>
+                                    </a>
+                                <?php endif; ?>
                             </td>
                             <!--コメント削除ボタン部分（自身が書き込んだコメントは削除できる）-->
                             <?php if($comment['user_id'] === $_SESSION['userId']): ?>
@@ -132,7 +140,11 @@ if(!empty($_POST)){
                                 <table>
                                     <tr>
                                         <td><img src="<?=$reply_comment['user_image']?>" class="createUserImage"></td>
-                                        <td><span class="threadCreater"><?=h($reply_comment['user_name'])?></span></td>
+                                        <td>
+                                            <a href="mypage.php?id=<?=$comment['user_id']?>">
+                                                <span class="threadCreater"><?=h($reply_comment['user_name'])?></span>
+                                            </a>
+                                        </td>
                                         <td>：<?=$reply_comment['insert_date'] ?></td>
                                     </tr>
                                 </table>
@@ -211,9 +223,11 @@ if(!empty($_POST)){
                 </table>
             </div>
         </div>
-        <?php if(!empty($_SESSION['userId'])): ?>
             <div class="commentform">
+            <?php if(!empty($_SESSION['userId'])): ?>
             <h4>投稿フォーム</h4>
+                <span class="error"><?php if(!empty($error['comment'])){ echo $error['comment']; } ?></span><br>
+                <span class="error"><?php if(!empty($error['commentimage'])){ echo $error['commentimage']; } ?></span>
                 <form action="" method="post" enctype="multipart/form-data">
                     <?php if(!empty($commentInfo)): ?>
                         <div class="reply_user_name">
@@ -240,10 +254,10 @@ if(!empty($_POST)){
                     </div>
                     <input type="hidden" name="reply_comment_id" value="<?=$_REQUEST['reply']?>"/>
                 </form>
-                <span class="error"><?php if(!empty($error['comment'])){ echo $error['comment']; } ?></span>
-                <span class="error"><?php if(!empty($error['commentimage'])){ echo $error['commentimage']; } ?></span>
-            </div>
-        <?php endif; ?>
+                <?php else: ?>
+                    <a href="login.php">ログイン</a>することでスレッドにコメントを書き込むことができます。
+                <?php endif; ?>
+            </div>  
     </div>
     <!--フッター部分-->
     <?php require_once('footer.php'); ?>

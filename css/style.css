@@ -205,12 +205,11 @@ a {
     margin:auto;
 }
 .footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    display:flex;
+    flex-direction:column; 
+    justify-content:center;
+    align-items: center;
     height: 50px;
-    text-align:center;
     font-size:13px;
     border-top: 1px solid #d3d3d3;
     line-height:50px;
@@ -219,7 +218,7 @@ a {
   }
   /*スマホ用（カテゴリーは縦2列）*/
   @media screen and (max-width: 480px) {
-    .searchbox,.menu{
+    .searchbox,.menu_box{
         display:none;
     }
     .category{

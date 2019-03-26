@@ -54,6 +54,7 @@ if(!empty($_POST)){
                     </tr>
                     <tr>
                         <td>プロフィール画像</td><td></td>
+                        <td><?php if($_SESSION['userCreate']['image'] === 'image/user_noimage.jpeg'): ?>（No Image画像）<?php endif; ?></td>
                     </tr>
                     <tr><td>
                     <img src="<?php if(!empty($c)){echo $c;}?><?=$_SESSION['userCreate']['image']?>" 

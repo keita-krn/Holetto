@@ -56,7 +56,7 @@ if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
                     </tr>
                     <tr>
                         <td>紹介文</td><td></td>
-                        <td><?=h($_SESSION['categoryCreate']['categoryintroduce'])?></td>
+                        <td ~~~ style="word-wrap:break-word;"><?=h($_SESSION['categoryCreate']['categoryintroduce'])?></td>
                     </tr>
                     <tr>
                         <td>サムネイル画像</td><td></td>

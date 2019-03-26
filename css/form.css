@@ -10,6 +10,14 @@ body{
     background-size: cover;
     height: 100vh;
 }
+table {
+  table-layout: fixed;
+  width:500px;
+  border:1px solid black;
+}
+table td {
+  word-break : break-all;
+}
 .contains{
     position: absolute;
     top:0;

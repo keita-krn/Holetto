@@ -18,6 +18,7 @@ require_once('../header.php');
         <div class="container">
             <img src="../image/logo.png">
             <p>登録が完了しました！</p>
+            <a href="login.php">ログインする</a>
         </div>
     </div>
 <!--フッター部分-->

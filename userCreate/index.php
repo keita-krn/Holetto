@@ -26,8 +26,8 @@ if(!empty($_POST)){
         $error['email'] = checkValidEmail($email);
     }
     //パスワード形式チェック
-    if(empty($error['pass'])){
-        $error['pass'] = checkValidPass($pass);
+    if(empty($error['password'])){
+        $error['password'] = checkValidPass($pass);
     }
     //入力されたユーザー名がすでに使われていないかチェックする
     if(empty($error['username'])){
@@ -90,7 +90,7 @@ $error['rewrite'] = true;
                         value="<?=h($_POST['email'])?>"/>
                 </div>
                 <div class="text">
-                    <label>パスワード(半角英数字を含む5~30文字)</label>
+                    <label>パスワード(半角英字、半角数字をそれぞれ1文字以上含む5~30文字)</label>
                     <span class="error"><?php if(!empty($error['password'])){ echo $error['password']; } ?></span>
                     <input type="password" name="password" size="10" maxlength="30" 
                         value=""/>

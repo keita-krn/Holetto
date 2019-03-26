@@ -57,9 +57,10 @@ function checkImage($image){
         return $errorMessage;
     }
     if($ext != '.jpg' && $ext != '.gif' && $ext != '.png' && $ext != 'jpeg'){
-        $errorMessage .= '*「.jpg」「.jpeg」「.png」「.gif」の画像を指定してください。';
-    }else if($image['size'] > 10000000){
-        $errorMessage .= '*ファイルサイズが大きすぎます。';
+        $errorMessage = '*「.jpg」「.jpeg」「.png」「.gif」の画像を指定してください。';
+    }
+    if($image['size'] > 500000){
+        $errorMessage = '*ファイルサイズが大きすぎます。';
     }
     return $errorMessage;
 }
@@ -179,7 +180,8 @@ function dbConnect(){
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
-    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));   
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));
+
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
@@ -366,8 +368,8 @@ function getThreadsByCategoryId($category_id, $start){
      try{
         $db = dbConnect();
         $sql = 'SELECT 
-        t.title,t.first_comment,t.thread_image,t.insert_date as thread_create_date,c.id as category_id,
-        c.category_name,c.category_image,c.category_introduce,u.user_name as thread_creater,u.user_image
+        t.title,t.first_comment,t.thread_image,t.insert_date AS thread_create_date,c.id AS category_id,
+        c.category_name,c.category_image,c.category_introduce,u.id AS user_id, u.user_name AS thread_creater,u.user_image
         FROM thread_table t
         LEFT JOIN category_table c 
         ON t.category_id = c.id 
@@ -386,7 +388,7 @@ function getThreadsByCategoryId($category_id, $start){
  function getComments($thread_id){
     try{
         $db = dbConnect();
-        $sql = 'SELECT c.id AS comment_id,c.comment,c.user_id,c.comment_image,c.reply_comment_id,c.insert_date,u.user_name,u.user_image
+        $sql = 'SELECT c.id AS comment_id,c.comment,c.user_id,c.comment_image,c.reply_comment_id,c.insert_date,u.id AS user_id,u.user_name,u.user_image
         FROM comment_table c 
         LEFT JOIN user_table u
         ON c.user_id = u.id
@@ -483,6 +485,19 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         }catch(PDOException $e){
             echo 'DB接続エラー：'.$e->getMessage();
          }
+ }
+ function getThreadIdByTitle($title){
+    try{
+        $db = dbConnect();
+        $sql = 'SELECT id FROM thread_table WHERE title=? ORDER BY insert_date DESC LIMIT 0,1';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1,$title,PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['id'];
+    }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+     }
  }
 /*-----------------------
   search.phpで使用する関数
@@ -609,13 +624,17 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
  }
 
  function deleteUser($user_id){
-    try{
-       $db = dbConnect();
-       $sql = 'DELETE FROM user_table WHERE id = ?';
-       $stmt = $db->prepare($sql);
-       $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
-       $stmt->execute();
-  }catch(PDOException $e){
-       echo 'DB接続エラー：'.$e->getMessage();        
+    if($user_id !== 152){
+        try{    
+        $db = dbConnect();
+        $sql = 'DELETE FROM user_table WHERE id = ?';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();        
+        }
+    }else{
+        header('error.php');
     }
  }

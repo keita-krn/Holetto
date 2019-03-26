@@ -13,15 +13,14 @@ if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
     $c = "";
 }
 //thread_tableに情報を格納する
-if(!empty($_POST)){
+if(!empty($_POST) && !empty($_SESSION['threadCreate'])){
     $insert_flag = insertThreadInfo($_SESSION['threadCreate']['threadtitle'],$_SESSION['threadCreate']['firstcomment'],
     $_SESSION['threadCreate']['threadimage'],$_SESSION['userId'],$_SESSION['threadCreate']['categoryid']);
     if($insert_flag){
-        unset($_SESSION['threadCreate']);
         header('Location:threadCreateComplete.php');
         exit();
     }else{
-        header('Location:threadCreateConfirm.php');
+        header('error.php');
         exit();
     }
 }
