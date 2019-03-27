@@ -46,7 +46,5 @@ $categories = getCategories();
         <?php endforeach ?>
     </div>
 </div>
-
-</div>
 <!--フッター部分-->
 <?php require_once('footer.php'); ?>
