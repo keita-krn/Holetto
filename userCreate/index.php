@@ -2,7 +2,11 @@
 require('../functions.php');
 session_start();
 
-if(!empty($_POST)){
+//トークンを生成し、セッションに格納する
+$token = bin2hex(openssl_random_pseudo_bytes(16));
+$_SESSION['token'] = $token;
+
+if(!empty($_POST) && $_SESSION['token'] === $_POST['token']){
     $user_name = $_POST['username'];
     $email = $_POST['email'];
     $pass = $_POST['password'];
@@ -10,12 +14,12 @@ if(!empty($_POST)){
     $image = $_FILES['image'];
 
     //入力チェックを行い、エラー項目がある場合はエラーメッセージを取得する
-    $error['username'] = checkInput('ユーザー名',$user_name,1,15);
-    $error['email'] = checkInput('メールアドレス',$email,1,50);
-    $error['password'] = checkInput('パスワード',$pass,5,30); 
+    $error['username'] = checkInput('ユーザー名', $user_name, 1, 15);
+    $error['email'] = checkInput('メールアドレス', $email, 1, 50);
+    $error['password'] = checkInput('パスワード', $pass, 5, 30); 
     //確認用のパスワードをチェックする
     if($pass2 === ''){
-        $error['password2'] = "*確認用のパスワードを入力してください";
+        $error['password2'] = "*確認用のパスワードを入力してください。";
     }else if($pass != $pass2){
         $error['password2'] = "*１回目の入力と異なります。";
     }
@@ -52,7 +56,7 @@ if(!empty($_POST)){
         }
         header('Location: userCreateConfirm.php');
         exit();
-    } 
+    }
 }
 //書き直しを行う場合の処理
 if($_REQUEST['action'] == 'rewrite'){
@@ -77,8 +81,9 @@ $error['rewrite'] = true;
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
                 <div class="text">
-                    <label>ユーザー名</label>
+                    <label>ユーザー名<?=var_dump(array("セッション" => $_SESSION['token'],"変数" => $token,"ポスト" => $_POST['token']))?></label>
                     <span class="error"><?php if(!empty($error['username'])){ echo $error['username']; } ?></span>
                     <input type="text" name="username" size="35" maxlength="15"
                             value="<?=h($_POST['username'])?>"/>
@@ -90,10 +95,10 @@ $error['rewrite'] = true;
                         value="<?=h($_POST['email'])?>"/>
                 </div>
                 <div class="text">
-                    <label>パスワード(半角英字、半角数字をそれぞれ1文字以上含む5~30文字)</label>
+                    <label>パスワード(半角英数字をそれぞれ含む5~30文字)</label>
                     <span class="error"><?php if(!empty($error['password'])){ echo $error['password']; } ?></span>
                     <input type="password" name="password" size="10" maxlength="30" 
-                        value=""/>
+                        value="<?=h($_POST['password'])?>"/>
                 </div>
                 <div class="text">
                     <label>パスワード(確認用)</label>

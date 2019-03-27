@@ -125,7 +125,14 @@ if(empty($_REQUEST['id']) || empty($_REQUEST['page']) || !is_numeric($_REQUEST['
                      / 最終コメント投稿日時：
                     <?php if(empty($thread['last_comment_date'])){echo 'コメントなし';}else{ echo $thread['last_comment_date'];}?>
                 </span><br>
-                <span class="threaduser"><i class="fas fa-user"></i> <?=h($thread['create_thread_user_name'])?></span>
+                <span class="threaduser">
+                    <i class="fas fa-user"></i>
+                    <?php if(!empty($thread['create_thread_user_name'])): ?>
+                        <?=h($thread['create_thread_user_name'])?>
+                    <?php else: ?>
+                        退会済みユーザー
+                    <?php endif; ?>
+                </span>
             </div>
         </div>
         <?php endforeach; ?>

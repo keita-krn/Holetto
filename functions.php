@@ -174,13 +174,13 @@ function uploadImage($image,$key){
 /*-----------------------
 DB接続用
  ------------------------*/
-function dbConnect(){
+function dbConnect(){ 
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
     $server = $url["host"];
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
-    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'")); 
 
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -583,7 +583,7 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
          LIMIT 0 , ?';
         $stmt = $db->prepare($sql);
         $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(2, $count,);
+        $stmt->bindValue(2, $count,PDO::PARAM_INT);
         $stmt->execute();
         return  $stmt->fetchAll(PDO::FETCH_ASSOC);
     }catch(PDOException $e){

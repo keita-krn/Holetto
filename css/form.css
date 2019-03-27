@@ -10,14 +10,6 @@ body{
     background-size: cover;
     height: 100vh;
 }
-table {
-  table-layout: fixed;
-  width:500px;
-  border:1px solid black;
-}
-table td {
-  word-break : break-all;
-}
 .contains{
     position: absolute;
     top:0;
@@ -25,7 +17,7 @@ table td {
     right:0;
     bottom:0;
     margin:auto;
-    width:950px;
+    width:1000px;
     height:520px;
     padding:10px;
     background-color:rgba(255,255,255,0.9);

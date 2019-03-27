@@ -181,7 +181,7 @@ if(!empty($_POST)){
     <div class="side_box">
         <div class="categoryinfointhread">
             <div class="categoryimage">
-            <Span>このスレッドが所属しているカテゴリー</span>
+            <span>このスレッドが所属しているカテゴリー</span>
                 <a href="category.php?id=<?=$info['category_id']?>&page=1">
                     <img src="<?=$info['category_image']?>">
                 </a>
