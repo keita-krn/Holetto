@@ -63,7 +63,12 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
             <?php if($_SESSION['userId'] == $user_id): ?>
                 <tr>
                     <td>
-                        <label class="update_user_image">プロフィール画像を変更する<input type="file" name="user_image" class="updateUserImage"></label>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <label class="update_user_image">プロフィール画像を変更する
+                            <input type="file" name="user_image" class="updateUserImage"></label>
+                            <span class="error"><?php if(!empty($error['user_image'])){ echo $error['user_image']; } ?></span>
+                            <input type="submit" class="submit" value="変更する"/>
+                        </form>
                     </td>
                 </tr>
                 <tr>

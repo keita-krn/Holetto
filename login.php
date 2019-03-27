@@ -13,7 +13,7 @@ if(!empty($_POST)){
         $result = getUserInfoToLogin($_POST['login']);
         //入力された値とハッシュ化したパスワードを比較する。一致した場合はtrueを返す⇒ログイン成功
         if(password_verify($_POST['password'], $result['password'])){ 
-            session_regenerate_id();
+            session_regenerate_id(true);
             $_SESSION['userId'] = $result['id'];
             $_SESSION['userName'] = $result['user_name'];
             $_SESSION['userImage'] = $result['user_image'];

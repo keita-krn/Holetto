@@ -82,7 +82,7 @@ if(!empty($_POST)){
             </tr>
         </table>
         <h2><?=h($info['title'])?></h2>
-        <p><?=nl2br(h($info['first_comment']))?></p>
+        <p><?=makeLink(nl2br(h($info['first_comment'])))?></p>
         <?php if($info['thread_image'] != "image/noimage.png"): ?>
             <img src="<?=$info['thread_image']?>" class="threadImage">
         <?php endif; ?>
@@ -124,7 +124,7 @@ if(!empty($_POST)){
                         </tr>
                     </table>
                     <tr>
-                    <p><?=nl2br(h($comment['comment']))?></p>
+                    <p><?=makeLink(nl2br(h($comment['comment'])))?></p>
                     <!--画像がアップされている場合は表示する-->
                     <?php if($comment['comment_image'] != 'noimage'): ?>
                         <img src="<?=($comment['comment_image'])?>" class="threadImage">
@@ -148,7 +148,7 @@ if(!empty($_POST)){
                                         <td>：<?=$reply_comment['insert_date'] ?></td>
                                     </tr>
                                 </table>
-                                <p><?=nl2br(h($reply_comment['comment']))?></p>
+                                <p><?=makeLink(nl2br(h($reply_comment['comment'])))?></p>
                                 <!--画像がアップされている場合は表示する-->
                                 <?php if($reply_comment['comment_image'] != 'noimage'): ?>
                                     <img src="<?=$reply_comment['comment_image']?>" class="reply_threadImage">

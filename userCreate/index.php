@@ -2,9 +2,10 @@
 require('../functions.php');
 session_start();
 
-//トークンを生成し、セッションに格納する
-$token = bin2hex(openssl_random_pseudo_bytes(16));
-$_SESSION['token'] = $token;
+if(empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 if(!empty($_POST) && $_SESSION['token'] === $_POST['token']){
     $user_name = $_POST['username'];
@@ -81,7 +82,7 @@ $error['rewrite'] = true;
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="token" value="<?=$_SESSION['token']?>">
+                <input type="hidden" name="token" value="<?php echo h($token)?>">
                 <div class="text">
                     <label>ユーザー名<?=var_dump(array("セッション" => $_SESSION['token'],"変数" => $token,"ポスト" => $_POST['token']))?></label>
                     <span class="error"><?php if(!empty($error['username'])){ echo $error['username']; } ?></span>

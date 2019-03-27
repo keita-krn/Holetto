@@ -11,6 +11,10 @@ function cut($sentence, $num){
         return $sentence;
     }
 }
+//URLリンク化
+function makeLink($value){
+    return mb_ereg_replace('(https?://[-_.!~*\'()a-zA-Z0-9;/?:@&=+$,%#]+)', '<a href="\1" target="_blank">\1</a>', $value);
+}
 //（連続する）スペースを1つの半角スペースに変換する
 function ChangeSpacesIntoOneHalfWidthSpace($value){
     $value = preg_replace('/　/', ' ', $value);
@@ -86,6 +90,21 @@ function uploadImageToCloudinary($image, $key){
         break;
     }
     return $result["secure_url"];    
+}
+//Cloudinaryから画像を削除する
+function deleteImageOnCloudinary($image_url){
+    require_once("vendor/autoload.php");
+    
+    $account = parse_url(getenv('CLOUDINARY_URL'));
+    \Cloudinary::config(array(
+        "cloud_name" => $account['host'],
+        "api_key" => $account['user'],
+        "api_secret" => $account['pass']
+    ));
+    $url_array = explode("/", $image_url);
+    $image_array = explode(".", $url_array[7]);
+    $image_id = $image_array[0];
+    \Cloudinary\Uploader::destroy($image_id);
 }
 
 /*
@@ -590,6 +609,22 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         echo 'DB接続エラー：'.$e->getMessage();
      }
  }
+ //ユーザー画像をアップデートする
+function UpdateUserImage($user_id, $image){
+    $del_image_url = getImagebyUserId($user_id);
+    deleteImageOnCloudinary($del_image_url);
+    $up_image_url = uploadImageToCloudinary($image, "user");
+    try{
+        $db = dbConnect();
+        $sql = 'UPDATE user_table SET user_image = ? WHERE id = ?';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $up_image_url, PDO::PARAM_STR);
+        $stmt->bindValue(2, $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+    }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+    }
+}
  /*-----------------------
   delete.phpで使用する関数
  ------------------------*/
@@ -637,4 +672,30 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
     }else{
         header('error.php');
     }
+ }
+ function getImagebyCommentId($comment_id){
+    try{
+        $db = dbConnect();
+        $sql = 'SELECT comment_image FROM comment_table WHERE id = ?';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $comment_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['comment_image'];
+   }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+   }
+ }
+ function getImagebyUserId($user_id){
+    try{
+        $db = dbConnect();
+        $sql = 'SELECT user_image FROM user_table WHERE id = ?';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['user_image'];
+   }catch(PDOException $e){
+        echo 'DB接続エラー：'.$e->getMessage();
+   }
  }
