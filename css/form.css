@@ -44,8 +44,8 @@ body{
     display:inline-block;
     vertical-align: top;
     text-align:center;
+    width: 600px;
     padding:10px;
-    background-color:rgba(f,f,f.0.8);
 }
 
 /*--------------------------------------
@@ -99,7 +99,7 @@ table{
   font-size:12px;
   margin-top:5px;
 }
-.link a{
+.link a,.container a{
   text-decoration: none;
   color:steelblue;
 }

@@ -7,7 +7,16 @@ if(!isset($_SESSION['userId'])){
     header('Location:../');
     exit();
 }
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     //エラー確認を行う
     $error['categoryname'] = checkInput('カテゴリー名',$_POST['categoryname'],1,15);
     $error['categoryintroduce'] = checkInput('紹介文',$_POST['categoryintroduce'],1,50);
@@ -57,6 +66,7 @@ $error['rewrite'] = true;
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                 <div class="text">
                     <label>カテゴリー名</label>
                     <span class="error"><?php if(!empty($error['categoryname'])){ echo $error['categoryname']; } ?></span>

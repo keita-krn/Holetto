@@ -2,12 +2,16 @@
 require('../functions.php');
 session_start();
 
-if(empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
 }
-$token = $_SESSION['token'];
-
-if(!empty($_POST) && $_SESSION['token'] === $_POST['token']){
+if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     $user_name = $_POST['username'];
     $email = $_POST['email'];
     $pass = $_POST['password'];
@@ -24,7 +28,7 @@ if(!empty($_POST) && $_SESSION['token'] === $_POST['token']){
     }else if($pass != $pass2){
         $error['password2'] = "*１回目の入力と異なります。";
     }
-    //画像ファイルの拡張子が正しいか、サイズが大きすぎないかどうかチェックする
+    //画像チェック
     $error['image'] = checkImage($image);
     //メールアドレス形式チェック
     if(empty($error['email'])){
@@ -82,9 +86,9 @@ $error['rewrite'] = true;
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="token" value="<?php echo h($token)?>">
+                <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                 <div class="text">
-                    <label>ユーザー名<?=var_dump(array("セッション" => $_SESSION['token'],"変数" => $token,"ポスト" => $_POST['token']))?></label>
+                    <label>ユーザー名</label>
                     <span class="error"><?php if(!empty($error['username'])){ echo $error['username']; } ?></span>
                     <input type="text" name="username" size="35" maxlength="15"
                             value="<?=h($_POST['username'])?>"/>

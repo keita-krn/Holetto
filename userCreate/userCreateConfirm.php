@@ -7,11 +7,20 @@ if(!isset($_SESSION['userCreate'])){
     header('Location:../index.php');
     exit();
 }
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 //imageフォルダから画像を読み込む際の処理
 if(mb_substr($_SESSION['userCreate']['image'], 0,5) === "image"){
     $c = "../";
 }
 if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     //ユーザー登録処理を行う
     insertUserInfo($_SESSION['userCreate']['username'],$_SESSION['userCreate']['email'],$_SESSION['userCreate']['password'],$_SESSION['userCreate']['image']);
     //セッションの中身を削除する
@@ -37,7 +46,7 @@ if(!empty($_POST)){
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post">
-                <input type="hidden" name="action" value="submit"/>
+                <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                 <p>記入した内容を確認して、「登録する」ボタンをクリックしてください。</p>
                 <table>
                     <tr>

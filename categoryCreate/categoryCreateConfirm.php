@@ -9,13 +9,21 @@ if(empty($_SESSION['categoryCreate'])){
         exit();
     }
 }
-
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 //imageフォルダから画像を読み込む際の処理
 if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
     $c = "../";
 }
 
  if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     //カテゴリー登録処理を行う
     $result = insertCategoryInfo($_SESSION['categoryCreate']['categoryname'],$_SESSION['categoryCreate']['categoryintroduce'],
     $_SESSION['categoryCreate']['categoryimage'],$_SESSION['userId']);
@@ -47,7 +55,7 @@ if(mb_substr($_SESSION['categoryCreate']['categoryimage'], 0,5) === "image"){
         <div class="container">
             <img src="../image/logo.png">
             <form action="" method="post">
-                <input type="hidden" name="action" value="submit"/>
+                <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                 <p>記入した内容を確認して、「登録する」ボタンをクリックしてください。</p>
                 <table>
                     <tr>

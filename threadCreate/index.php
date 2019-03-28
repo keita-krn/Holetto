@@ -7,6 +7,11 @@ if(empty($_SESSION['userId']) || empty($_REQUEST['id'])){
     header('Location:../index.php');
     exit();
 }
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
     $c = "../";
 }else{
@@ -14,6 +19,10 @@ if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
 }
 //スレッド作成処理を行う
 if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     //エラー確認を行う
     $error['threadtitle'] = checkInput('タイトル',$_POST['threadtitle'],1,30);
     $error['firstcomment'] = checkInput('コメント',$_POST['firstcomment'],1,120);
@@ -108,6 +117,7 @@ $error['rewrite'] = true;
     <div class="createthread">
         <span class="makenewthread">新規スレッド作成</span>（*は必須項目です）
         <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
             <div>
                 <label>スレッドタイトル*</label>
                 <span class="error"><?php if(!empty($error['threadtitle'])){ echo $error['threadtitle']; } ?></span><br>

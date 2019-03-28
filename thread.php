@@ -12,11 +12,21 @@ if(empty($_REQUEST['id'] || !is_numeric($_REQUEST['id']))){
     //スレッドについたコメントを取得する
     $comments = getComments($thread_id);
 }
+//返信時の処理
 if(!empty($_REQUEST['reply']) && is_numeric($_REQUEST['reply'])){
     $commentInfo = getCommentByCommentId($_REQUEST['reply']); 
 }
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 //投稿フォーム処理
 if(!empty($_POST)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: error.php');
+        exit();
+    }
     //エラーチェック
     $error['comment'] = checkInput('コメント',$_POST['comment'],1,120);
     $error['commentimage'] = checkImage($_FILES['commentimage']);
@@ -229,6 +239,7 @@ if(!empty($_POST)){
                 <span class="error"><?php if(!empty($error['comment'])){ echo $error['comment']; } ?></span><br>
                 <span class="error"><?php if(!empty($error['commentimage'])){ echo $error['commentimage']; } ?></span>
                 <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                     <?php if(!empty($commentInfo)): ?>
                         <div class="reply_user_name">
                             <?php if($commentInfo['user_id'] != $_SESSION['userId']): ?>

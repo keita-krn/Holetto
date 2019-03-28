@@ -7,6 +7,11 @@ if(empty($_SESSION['userId'])){
     header('Location:../index.php');
     exit();
 }
+if(empty($_POST)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
 if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
     $c = "../";
 }else{
@@ -14,6 +19,10 @@ if($_SESSION['categoryinfo']['user_image'] === "image/user_noimage.jpeg"){
 }
 //thread_tableに情報を格納する
 if(!empty($_POST) && !empty($_SESSION['threadCreate'])){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: ../error.php');
+        exit();
+    }
     $insert_flag = insertThreadInfo($_SESSION['threadCreate']['threadtitle'],$_SESSION['threadCreate']['firstcomment'],
     $_SESSION['threadCreate']['threadimage'],$_SESSION['userId'],$_SESSION['threadCreate']['categoryid']);
     if($insert_flag){
@@ -83,7 +92,7 @@ if(!empty($_POST) && !empty($_SESSION['threadCreate'])){
         </div>  
     <div class="createthread">
         <form action="" method="post">
-            <input type="hidden" name="action" value="submit"/>
+            <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
             <p>記入した内容を確認して、「作成する」ボタンをクリックしてください。</p>
                 <table>
                     <tr>

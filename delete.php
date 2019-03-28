@@ -23,6 +23,6 @@ if(!empty($_REQUEST['comment_id']) && !empty($_REQUEST['thread_id']) && is_numer
     header('Location: logout.php');
     exit();    
 }else{
-    header('Location: index.php');
+    header('Location: error.php');
     exit();
 }
