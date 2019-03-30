@@ -12,6 +12,24 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
     //投稿したコメントを10件取得する
     $comments = getCommentsByUserId($user_id, 10);
 }
+if(empty($_FILES)){
+    //トークン生成
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['token'] = $token;
+}
+if(!empty($_FILES)){
+    if(!hash_equals($_SESSION['token'], $_POST['token'])){
+        header('Location: error.php');
+        exit();
+    }
+    $message = checkImage($_FILES['user_image']);
+    if(!empty($message)){
+        $errorMessage = $message;
+    }else{
+        updateUserImage($_SESSION['userId'], $_FILES['user_image']);
+        $_SESSION['userImage'] = getImagebyUserId($_SESSION['userId']);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang=ja>
@@ -40,6 +58,7 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
                     <span class="categoryname"><?=h($userInfo['user_name'])?></span>
                 </td>
             </tr>
+            <?php if($_SESSION['userId'] == $user_id): ?>
             <tr>
                 <td>
                     <span class="title">メールアドレス</span>
@@ -50,6 +69,7 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
                     <span class="categorysentence"><?=h($userInfo['email'])?></span>
                 </td>
             </tr>
+            <?php endif; ?>
             <tr>
                 <td>
                     <span class="title">登録日</span>
@@ -60,26 +80,24 @@ if(empty($_REQUEST['id']) || !is_numeric($_REQUEST['id'])){
                     <span class="categorysentence"><?=h($userInfo['insert_date'])?></span>
                 </td>
             </tr>
-            <?php if($_SESSION['userId'] == $user_id): ?>
-                <tr>
-                    <td>
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <label class="update_user_image">プロフィール画像を変更する
-                            <input type="file" name="user_image" class="updateUserImage"></label>
-                            <span class="error"><?php if(!empty($error['user_image'])){ echo $error['user_image']; } ?></span>
-                            <input type="submit" class="submit" value="変更する"/>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="delete.php?user_id=<?=$_SESSION['userId']?>" class="deleteAccount" 
-                        onclick="return confirm('本当に削除します。よろしいですか？')">このアカウントを削除する</a>
-                    </td>
-                </tr>
-            <?php endif; ?>
             </table>
         </div>
+        <?php if($_SESSION['userId'] == $user_id): ?>
+            <div class="change_user_info_box">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
+                    <label class="update_user_image"><i class="fas fa-portrait"></i> プロフィール画像を変更する</label>
+                    <span class="error"><?php if(!empty($errorMessage)){ echo $errorMessage; } ?></span>
+                    <div class="update_user_image_box">
+                        <input type="file" name="user_image">
+                    </div>
+                    <input type="submit" class="updateUserImage" value="変更する"/>
+                </form>
+                <div class="delete_user_info_box">
+                    <a href="delete.php?user_id=<?=$_SESSION['userId']?>" onclick="return confirm('本当に削除します。よろしいですか？')">このアカウントを削除する</a>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
     <!----------------------スレッド一覧表示部分---------------------->
     <div class="contents">

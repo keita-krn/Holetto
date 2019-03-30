@@ -17,7 +17,6 @@ if(!empty($_POST)){
             $_SESSION['userId'] = $result['id'];
             $_SESSION['userName'] = $result['user_name'];
             $_SESSION['userImage'] = $result['user_image'];
-            $_SESSION['time'] = time();
             header('Location: index.php');
             exit();
         }else{
@@ -55,7 +54,6 @@ if(!empty($_POST)){
     </div>
     <div class="check">
         <span class="error"><?php if(!empty($error['diff'])){ echo $error['diff']; } ?></span>
-        <!-- <input id="save" type="checkbox" name="save" value="on"><label for="save">次回から自動的にログインする</label> -->
     </div>
     <div class="sendbtn">
         <input type="submit" value="ログイン"/>

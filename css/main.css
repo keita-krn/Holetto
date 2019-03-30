@@ -241,16 +241,21 @@ a {
     font-size:12px;
     color:gray;
 }
-.update_user_image{
-    color: rgb(26, 87, 179);
-    cursor:pointer;
+.change_user_info_box{
+    padding:10px 15px;
 }
-.updateUserImage{
-    display: none;
+.update_user_image_box{
+    background-color: rgba(220,220,220);
+    padding: 10px;
+    margin: 5px 0px;
 }
-.deleteAccount{
-    color:rgb(138, 7, 7);
+.delete_user_info_box{
+    margin-top:30px;
+    color:rgba(255,0,0);
     font-size:9px;
+}
+.delete_user_info_box a{
+    color:rgba(255,0,0);
 }
 /*-----------------------------------------
 　footer.php

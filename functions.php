@@ -79,7 +79,6 @@ function uploadImageToCloudinary($image, $key){
         "api_key" => $account['user'],
         "api_secret" => $account['pass']
     )); 
-
     switch($key){
         case "thread":
         case "comment":
@@ -91,104 +90,6 @@ function uploadImageToCloudinary($image, $key){
     }
     return $result["secure_url"];    
 }
-//Cloudinaryから画像を削除する
-function deleteImageOnCloudinary($image_url){
-    require_once("vendor/autoload.php");
-    
-    $account = parse_url(getenv('CLOUDINARY_URL'));
-    \Cloudinary::config(array(
-        "cloud_name" => $account['host'],
-        "api_key" => $account['user'],
-        "api_secret" => $account['pass']
-    ));
-    $url_array = explode("/", $image_url);
-    $image_array = explode(".", $url_array[7]);
-    $image_id = $image_array[0];
-    \Cloudinary\Uploader::destroy($image_id);
-}
-
-/*
-　画像をアップロードする処理を行う。戻り値はファイル名。
-　カテゴリー作成時、アカウント登録時にアップされた画像にはリザイズ処理を行う（300*300に縮小）。
-　画像がアップされていない場合にはNo Image画像のファイル名を格納する。
-　$keyには「category」「thread」「comment」「user」が入り、画像はそれぞれの名前がついたフォルダに保存される。
-function uploadImage($image,$key){
-    //ファイル名を取得する。
-    $fileName = $image['name'];
-    $imageName = '';
-
-    //画像がアップされていない場合はNo Image画像に置き換える（コメント欄で投稿された場合は画像を表示しない）。
-    if($fileName === ''){
-        switch($key){
-            case user:
-            $imageName = 'noimage.jpeg';
-            break;
-            case category: 
-            case thread:
-            $imageName = 'noimage.png';
-            break;
-            case comment:
-            $imageName = 'noimage';
-            break;
-        }
-    //スレッド作成時、コメント投稿時に画像がアップされた場合はリサイズ処理をせずに保存する（スレッドに表示する為）。
-    }else if($key === 'thread' || $key === 'comment'){
-            $imageName = date('YmdHis').$fileName;
-            //一時的に保存された画像ファイルを移動させる。
-            switch($key){
-                case 'thread':
-                move_uploaded_file($image['tmp_name'] , '../image/'.$key.'_image/'.$imageName);
-                break;
-                case 'comment':
-                move_uploaded_file($image['tmp_name'] , 'image/'.$key.'_image/'.$imageName);
-                break;
-            }
-    //カテゴリー作成時、アカウント登録時に画像がアップされた場合はリサイズ処理を行う。        
-    }else{
-        //一時的に保存された画像ファイルを移動させる。
-        move_uploaded_file($image['tmp_name'] , '../image/'.$key.'_image/'.$fileName);
-
-        --------------------画像のリザイズ処理を行う--------------------
-
-        //画像のサイズを取得する。
-        list($width,$height) = getimagesize('../image/'.$key.'_image/'.$fileName);
-        //画像ファイルの拡張子を取得する。
-        $ext = substr($fileName, -4);
-        //拡張子の種類によって処理を分ける。
-        switch($ext){
-            case ".jpg":
-            case "jpeg":
-                //元の画像を読み込む。
-                $baseImage = imagecreatefromjpeg('../image/'.$key.'_image/'.$fileName); 
-                //サムネイル画像をはめ込むための土台を作成する。
-                $thumbnail = imagecreatetruecolor(300, 300);
-                //土台の画像に合わせて元の画像を縮小しコピー&ペーストする。
-                imagecopyresampled($thumbnail, $baseImage, 0, 0, 0, 0, 300, 300, $width, $height);
-                //縮小した画像を保存する　ファイル名がかぶらないようにdate関数を組み込み処理を行う。
-                $imageName = date('YmdHis').$fileName;
-                imagejpeg($thumbnail, '../image/'.$key.'_image/'.$imageName);
-                break;
-            case ".png":
-                $baseImage = imagecreatefrompng('../image/'.$key.'_image/'.$fileName);
-                $thumbnail = imagecreatetruecolor(300, 300);
-                imagecopyresampled($thumbnail, $baseImage, 0, 0, 0, 0, 300, 300, $width, $height);
-                $imageName = date('YmdHis').$fileName;
-                imagepng($thumbnail, '../image/'.$key.'_image/'.$imageName);
-                break;
-            case ".gif":
-                $baseImage = imagecreatefromgif('../image/'.$key.'_image/'.$fileName);
-                $thumbnail = imagecreatetruecolor(300, 300);
-                imagecopyresampled($thumbnail, $baseImage, 0, 0, 0, 0, 300, 300, $width, $height);
-                $imageName = date('YmdHis').$fileName;
-                imagegif($thumbnail, '../image/'.$key.'_image/'.$imageName);
-                break;
-        }
-    }   
-    //リサイズ処理を行う前の画像が保存されている状態なのでそれを削除する
-    unlink('../image/'.$key.'_image/'.$fileName);
-    return $imageName;
-} 
-*/
 
 /*-----------------------
 DB接続用
@@ -199,7 +100,8 @@ function dbConnect(){
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
-    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'")); 
+    $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));
+
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する
@@ -223,7 +125,8 @@ function dbConnect(){
             return "*そのユーザー名は既に使用されています。";
         }
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }   
  }
  function checkExistUserEmail($email){
@@ -238,7 +141,8 @@ function dbConnect(){
             return "*そのメールアドレスは既に登録されています。";
         }
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }   
  }
  function insertUserInfo($name,$email,$password,$image){
@@ -252,7 +156,8 @@ function dbConnect(){
         $statement->bindValue(4,$image,PDO::PARAM_STR);
         $statement->execute();
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }  
  }
 /*-----------------------
@@ -264,7 +169,8 @@ function getCategories(){
         $sql = 'SELECT id,category_name,category_image FROM category_table ORDER BY insert_date DESC LIMIT 24';
         return $db->query($sql);
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }   
 }
 /*-----------------------
@@ -281,7 +187,8 @@ function getUserInfoToLogin($value){
         $statement->execute();
         return $statement->fetch();
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }   
 }
 /*-----------------------
@@ -301,7 +208,8 @@ function getCategoryInfo($category_id){
         $stmt->execute();
         return $stmt->fetch();
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
 }
 //ある特定のカテゴリーに属するスレッドの個数を取得する
@@ -315,7 +223,8 @@ function getThreadCount($category_id){
         $count = $result["count"];
         return $count;
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
 }
 //カテゴリーIDと一致するスレッドの情報を10件取得する（そのスレッドについたコメントの投稿時間が新しい順に並べる）
@@ -338,7 +247,8 @@ function getThreadsByCategoryId($category_id, $start){
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
 }
 /*-----------------------
@@ -358,7 +268,8 @@ function getThreadsByCategoryId($category_id, $start){
             return false;
         }
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
  function insertCategoryInfo($name, $introduce, $image, $user_id){
@@ -374,7 +285,8 @@ function getThreadsByCategoryId($category_id, $start){
         $result = $statement->execute();
         return $result;
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
 /*-----------------------
@@ -399,7 +311,8 @@ function getThreadsByCategoryId($category_id, $start){
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
      }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
 //スレッドについたコメントを取得する
@@ -416,7 +329,8 @@ function getThreadsByCategoryId($category_id, $start){
         $stmt->execute();
         return  $stmt->fetchAll(PDO::FETCH_ASSOC);
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
  //コメントIDから、コメント内容、コメント画像、コメント投稿時間、投稿者の名前と画像を取得する
@@ -431,7 +345,8 @@ function getThreadsByCategoryId($category_id, $start){
          $stmt->execute();
          return $stmt->fetch(PDO::FETCH_ASSOC);
      }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
       }
  }
  //いいねボタン処理
@@ -451,7 +366,8 @@ function isGoodExist($comment_id,$user_id){
             return false;
         }
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
 }
 //あるコメントに付いているいいねの数を取得する
@@ -465,7 +381,8 @@ function getGoodCount($comment_id){
         $goodCount = $stmt->fetch();
         return $goodCount['cnt'];
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
 }
 //コメントをcomment_tableに格納する
@@ -482,7 +399,8 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $success = $stmt->execute();
         return $success;
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
 }
 /*-----------------------
@@ -514,7 +432,8 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $result = $stmt->fetch();
         return $result['id'];
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
 /*-----------------------
@@ -542,7 +461,8 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
   //スレッドテーブルから検索ワードに部分一致するスレッドタイトルを検索する
@@ -567,7 +487,8 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
 /*-----------------------
@@ -582,7 +503,8 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $stmt->execute();
         return $stmt->fetch();
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
 
@@ -605,13 +527,12 @@ function insertComment($comment,$thread_id,$user_id,$image,$reply_comment_id){
         $stmt->execute();
         return  $stmt->fetchAll(PDO::FETCH_ASSOC);
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
      }
  }
  //ユーザー画像をアップデートする
-function UpdateUserImage($user_id, $image){
-    $del_image_url = getImagebyUserId($user_id);
-    deleteImageOnCloudinary($del_image_url);
+function updateUserImage($user_id, $image){
     $up_image_url = uploadImageToCloudinary($image, "user");
     try{
         $db = dbConnect();
@@ -621,7 +542,8 @@ function UpdateUserImage($user_id, $image){
         $stmt->bindValue(2, $user_id, PDO::PARAM_INT);
         $stmt->execute();
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
 }
  /*-----------------------
@@ -642,7 +564,8 @@ function UpdateUserImage($user_id, $image){
             return false;
         }
     }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
  function deleteComment($comment_id){
@@ -653,7 +576,8 @@ function UpdateUserImage($user_id, $image){
          $stmt->bindValue(1, $comment_id, PDO::PARAM_INT);
          $stmt->execute();
     }catch(PDOException $e){
-         echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
 
@@ -669,7 +593,8 @@ function UpdateUserImage($user_id, $image){
         echo 'DB接続エラー：'.$e->getMessage();        
         }
     }else{
-        header('error.php');
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
     }
  }
  function getImagebyCommentId($comment_id){
@@ -682,7 +607,8 @@ function UpdateUserImage($user_id, $image){
         $result = $stmt->fetch();
         return $result['comment_image'];
    }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+    error_log('DB接続エラー：'.$e->getMessage());
+    header('Location: error.php');
    }
  }
  function getImagebyUserId($user_id){
@@ -695,6 +621,7 @@ function UpdateUserImage($user_id, $image){
         $result = $stmt->fetch();
         return $result['user_image'];
    }catch(PDOException $e){
-        echo 'DB接続エラー：'.$e->getMessage();
+        error_log('DB接続エラー：'.$e->getMessage());
+        header('Location: error.php');
    }
  }
