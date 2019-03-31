@@ -85,7 +85,9 @@ $error['rewrite'] = true;
                     <span class="error"><?php if(!empty($error['categoryimage'])){ echo $error['categoryimage']; } ?></span>
                     <div class="imagebtn">
                     <?php if(!empty($error)): ?><span class="error">*恐れ入りますが、画像を改めて指定してください</span><?php endif; ?>
-                        <input type="file" name="categoryimage" size="35">
+                        <div class="update_image_box">
+                            <input type="file" name="categoryimage" size="35">
+                        </div>
                     </div>
                 </div>
                     <div class="sendbtn"><input type="submit" class="submit" value="入力内容を確認する"/></div>

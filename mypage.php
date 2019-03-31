@@ -88,7 +88,7 @@ if(!empty($_FILES)){
                     <input type="hidden" name="token" value="<?php echo h($_SESSION['token'])?>">
                     <label class="update_user_image"><i class="fas fa-portrait"></i> プロフィール画像を変更する</label>
                     <span class="error"><?php if(!empty($errorMessage)){ echo $errorMessage; } ?></span>
-                    <div class="update_user_image_box">
+                    <div class="update_image_box">
                         <input type="file" name="user_image">
                     </div>
                     <input type="submit" class="updateUserImage" value="変更する"/>

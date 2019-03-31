@@ -132,8 +132,10 @@ $error['rewrite'] = true;
             </div>
             <div>
                 <label>アップする画像</label>
-                <span class="error"><?php if(!empty($error['threadimage'])){ echo $error['threadimage']; } ?></span><br>
-                <input type="file" name="threadimage" size="35">
+                <span class="error"><?php if(!empty($error['threadimage'])){ echo $error['threadimage']; } ?></span>
+                <div class="update_image_box">
+                    <input type="file" name="threadimage" size="35">
+                </div>
             </div>
             <div>
                 <input type="submit" class="submit" value="入力内容を確認する"/>

@@ -244,7 +244,7 @@ a {
 .change_user_info_box{
     padding:10px 15px;
 }
-.update_user_image_box{
+.update_image_box{
     background-color: rgba(220,220,220);
     padding: 10px;
     margin: 5px 0px;
@@ -359,6 +359,9 @@ a {
     position:absolute;
     bottom:3px;
     right:3px;
+}
+.comment_form_title{
+    margin:0;
 }
 /*いいねボタン部分*/
 .good-btn{

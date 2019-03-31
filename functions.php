@@ -94,14 +94,14 @@ function uploadImageToCloudinary($image, $key){
 /*-----------------------
 DB接続用
  ------------------------*/
-function dbConnect(){
+function dbConnect(){ 
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
     $server = $url["host"];
     $user = $url["user"];
     $pass = $url["pass"];
     $dbname = substr($url["path"], 1);
     $db = new PDO('mysql:host=' . $server . ';dbname=' . $dbname . ';charset=utf8mb4',$user,$pass,array(\PDO::MYSQL_ATTR_INIT_COMMAND =>"SET time_zone = 'Asia/Tokyo'"));
-
+    
     //例外をスローする
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //静的プレースホルダを使用する

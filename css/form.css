@@ -103,6 +103,11 @@ table{
   text-decoration: none;
   color:steelblue;
 }
+.update_image_box{
+  background-color: rgba(220,220,220);
+  padding: 5px;
+  margin: 5px 0px;
+}
 /*--------------------------------------
 チェックボックス
 ---------------------------------------*/

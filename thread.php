@@ -235,7 +235,7 @@ if(!empty($_POST)){
         </div>
             <div class="commentform">
             <?php if(!empty($_SESSION['userId'])): ?>
-            <h4>投稿フォーム</h4>
+            <h4 class="comment_form_title">投稿フォーム</h4>
                 <span class="error"><?php if(!empty($error['comment'])){ echo $error['comment']; } ?></span><br>
                 <span class="error"><?php if(!empty($error['commentimage'])){ echo $error['commentimage']; } ?></span>
                 <form action="" method="post" enctype="multipart/form-data">
@@ -256,8 +256,10 @@ if(!empty($_POST)){
                     </div>
                     <br>
                     <div>
-                        <label>画像をアップする</label><br>
-                        <input type="file" name="commentimage" size="35">
+                        <label>画像をアップする</label>
+                        <div class="update_image_box">
+                            <input type="file" name="commentimage" size="35">
+                        </div>
                     </div>
                     <div>
                         <br>

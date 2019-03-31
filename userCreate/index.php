@@ -100,7 +100,7 @@ $error['rewrite'] = true;
                         value="<?=h($_POST['email'])?>"/>
                 </div>
                 <div class="text">
-                    <label>パスワード(半角英数字をそれぞれ含む5~30文字)</label>
+                    <label>パスワード(半角英数字を含む5~30文字)</label>
                     <span class="error"><?php if(!empty($error['password'])){ echo $error['password']; } ?></span>
                     <input type="password" name="password" size="10" maxlength="30" 
                         value="<?=h($_POST['password'])?>"/>
@@ -114,7 +114,7 @@ $error['rewrite'] = true;
                     <label>プロフィール画像</label>
                     <span class="error"><?php if(!empty($error['image'])){ echo $error['image']; } ?></span>
                     <?php if(!empty($error)): ?><span class="error">*恐れ入りますが、画像を改めて指定してください</span><?php endif; ?>
-                    <div class="imagebtn">
+                    <div class="update_image_box">
                         <input type="file" name="image" size="35">
                     </div>
                 </div>
