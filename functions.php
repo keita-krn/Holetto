@@ -582,7 +582,7 @@ function updateUserImage($user_id, $image){
  }
 
  function deleteUser($user_id){
-    if($user_id !== 152){
+    if($user_id != 152){
         try{    
         $db = dbConnect();
         $sql = 'DELETE FROM user_table WHERE id = ?';
@@ -593,7 +593,7 @@ function updateUserImage($user_id, $image){
         echo 'DB接続エラー：'.$e->getMessage();        
         }
     }else{
-        error_log('DB接続エラー：'.$e->getMessage());
+        error_log('id:guest削除');
         header('Location: error.php');
     }
  }
